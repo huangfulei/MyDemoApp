@@ -5,8 +5,8 @@ export class APIUrlConstants {
 
     //todo: check the context path
     public static GATEWAY_CONTEXT_PATH = '/8080';
-    public static LOG_IN = '/login';
-    public static OAUTH_TOKEN = '/oauth/token'
+    public static LOG_IN = 'api/login';
+    public static OAUTH_TOKEN = 'api/oauth/token'
 
 
 }

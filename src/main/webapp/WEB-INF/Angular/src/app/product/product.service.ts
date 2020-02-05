@@ -9,7 +9,7 @@ import {Product} from "./product";
 export class ProductService {
 
     private productSubject = new BehaviorSubject<any>({});
-    private getProductUrl = '/products';
+    private getProductUrl = 'api/products';
     public updatedProduct = this.productSubject.asObservable();
 
     constructor(private readonly http: HttpClient,) {

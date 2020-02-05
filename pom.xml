@@ -140,11 +140,10 @@
                                 <goal>copy-resources</goal>
                             </goals>
                             <configuration>
-                                <outputDirectory>${project.build.directory}/classes/static/</outputDirectory>
-                                <resources>
+                                <outputDirectory>${project.build.directory}/classes/resources/</outputDirectory>
+                            <resources>
                                     <resource>
-                                        <directory>${basedir}/src/main/webapp/WEB-INF/Angular/dist/Lift
-                                        </directory>
+                                        <directory>${basedir}/src/main/webapp/WEB-INF/Angular/dist/Lift</directory>
                                     </resource>
                                 </resources>
                             </configuration>
