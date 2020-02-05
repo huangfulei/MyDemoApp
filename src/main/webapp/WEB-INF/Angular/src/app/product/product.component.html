@@ -1,0 +1,22 @@
+<div class="wrapper">
+    <mat-card *ngFor="let product of products; let i = index" class="card">
+        <div class="top-section">
+            <img #img id="image-container" src="../../assets/images/1.png" alt="">
+            <div class="nav">
+                <img #img1 (click)="changeImg(img,img1)" src="../../assets/images/1.png" alt="">
+                <img #img2 (click)="changeImg(img,img2)" src="../../assets/images/2.png" alt="">
+                <img #img3 (click)="changeImg(img,img3)" src="../../assets/images/3.png" alt="">
+            </div>
+            <div class="price">{{product.price}}</div>
+        </div>
+
+        <div class="product-info">
+            <div class="name">{{product.name}}</div>
+            <div class="dis">{{product.description}}</div>
+            <a #btn class="btn" [@buttonTextStateTrigger]="buttonTextState"
+               (@buttonTextStateTrigger.done)="buttonTextTransitioned(btn)"
+               (click)="onAddToCart(product,btn)">ADD TO CART</a>
+        </div>
+    </mat-card>
+
+</div>

@@ -1,0 +1,42 @@
+<mat-vertical-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="addressForm">
+        <form [formGroup]="addressForm">
+            <ng-template matStepLabel>Fill out your address</ng-template>
+            <mat-form-field>
+                <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="paymentForm">
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+            <ng-template matStepLabel>Fill out your card</ng-template>
+            <div class="sr-input sr-card-element" id="card-info"></div>
+            <mat-form-field>
+                <input matInput placeholder="Address" formControlName="secondCtrl" required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+
+                <button mat-button id="submit" type="submit" [disabled]="buttonDisabled">
+                    <div class="spinner hidden" id="spinner"></div>
+                    <span id="button-text">Pay</span><span id="order-amount"></span>
+                </button>
+                <div *ngIf="error" class="alert alert-danger">
+                    {{error}}
+                </div>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        You are now done.
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-vertical-stepper>

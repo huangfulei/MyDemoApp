@@ -1,0 +1,18 @@
+.homePage {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.body {
+  /*display: flex;*/
+  /*justify-content: space-around;*/
+  padding-bottom: 50px;
+}
+
+.wanted {
+  /*width: 50%;*/
+}
+
+.journey {
+  /*width: 50%;*/
+}

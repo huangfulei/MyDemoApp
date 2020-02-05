@@ -1,0 +1,68 @@
+.fill-remaining-space{
+    flex: 1 1 auto;
+}
+
+.menu button{
+    color: black;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0 10px;
+    transition: 0.4s;
+}
+
+.menu fa-icon{
+    padding: 0 10px;
+}
+.show-menu-btn,.hide-menu-btn{
+    transition: 0.4s;
+    font-size: 30px;
+    cursor: pointer;
+    display: none;
+}
+.show-menu-btn{
+    float: right;
+}
+
+.menu button:hover,
+.show-menu-btn:hover,
+.hide-menu-btn:hover{
+    color: #3498db;
+}
+
+#chk{
+    position: absolute;
+    visibility: hidden;
+    z-index: -1111;
+}
+
+@media screen and (max-width:500px) {
+    .show-menu-btn,.hide-menu-btn{
+        display: block;
+    }
+    .menu{
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: #333;
+        right: -100%;
+        top: 0;
+        text-align: center;
+        padding: 80px 0;
+        line-height: normal;
+        transition: 0.5s;
+    }
+    .menu button{
+        display: block;
+        padding: 20px;
+    }
+    .hide-menu-btn{
+        position: absolute;
+        top: 40px;
+        right: 40px;
+    }
+    #chk:checked ~ .menu{
+        right: 0;
+    }
+}

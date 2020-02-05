@@ -1,0 +1,68 @@
+<div>
+    <mat-toolbar>
+        <button mat-button routerLink="/home">
+            <mat-icon>home</mat-icon>
+        </button>
+        <span class="fill-remaining-space"></span>
+        <input type="checkbox" id="chk">
+        <label for="chk" class="show-menu-btn">
+            <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+        </label>
+        <div class="menu">
+            <button mat-button routerLink="/home" (click)="test()">home</button>
+            <button mat-button routerLink="/products">products</button>
+            <button mat-button
+                    routerLink="/login"
+                    *ngIf="!isLoggedIn">log in
+            </button>
+            <button mat-button
+                    routerLink="/sign_up"
+                    *ngIf="!isLoggedIn">sign up
+            </button>
+            <button mat-button
+                    *ngIf="isLoggedIn"
+                    (click)="onLogOut()">Log Out
+            </button>
+            <!--<button mat-icon-button [matBadge]="user.itemsInCart"
+                        matBadgeColor="warn"
+                        *ngIf="isLoggedIn">
+                    <fa-icon [icon]="['fas','shopping-cart']"
+                            size="lg"
+                            routerLink="/cart">
+                    </fa-icon>
+                </button>-->
+            <button mat-icon-button [matBadge]="itemsInCart"
+                    matBadgeColor="warn"
+                    routerLink="/cart"
+                    *ngIf="isLoggedIn">
+                <mat-icon>shopping_basket</mat-icon>
+            </button>
+            <label for="chk" class="hide-menu-btn">
+                <fa-icon [icon]="['fas','times']"></fa-icon>
+            </label>
+            <fa-icon [icon]="['fas','bars']"
+                    *ngIf="isLoggedIn"
+                    [matMenuTriggerFor]="menu"
+                    fxHide.gt-sm="false"
+                    fxShow="true">
+            </fa-icon>
+            <mat-menu #menu="matMenu">
+                <div *ngIf="!isLoggedIn">
+                    <button mat-menu-item routerLink="/user/login">log in</button>
+                    <button mat-menu-item routerLink="/user/sign_up">sign up</button>
+                </div>
+                <div *ngIf="isLoggedIn">
+                    <button mat-menu-item routerLink="/user">My Account</button>
+                    <button mat-menu-item routerLink="/user/posts">My Posts</button>
+                    <button mat-menu-item routerLink="/user/tutorial">My Tutorial</button>
+                    <button mat-menu-item routerLink="/user/saved">Saved</button>
+                </div>
+            </mat-menu>
+        </div>
+        <!-- <button class="user-image-button" *ngIf="isLoggedIn" [matMenuTriggerFor]="menu" fxHide.gt-sm="false" fxShow="true">
+         </button>-->
+
+    </mat-toolbar>
+</div>
+
+

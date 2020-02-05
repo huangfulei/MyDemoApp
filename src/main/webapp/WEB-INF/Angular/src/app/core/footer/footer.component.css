@@ -1,0 +1,18 @@
+.footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #1d2124;
+    color: white;
+    text-align: center;
+    height: 50px;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.links{
+    cursor: pointer;
+}
