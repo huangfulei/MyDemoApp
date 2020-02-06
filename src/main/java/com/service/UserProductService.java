@@ -20,11 +20,7 @@ public class UserProductService {
 
     public Order addProductToCart(Product product) {
 
-        int productId = product.getId();
-        UserProductKey key = new UserProductKey();
-        key.setProductId(productId);
-
-        if (userProductRepository.existsById(key)) {
+        /*if (userProductRepository.existsById(key)) {
 
             UserProduct userProduct = userProductRepository.findById(key).get();
             userProduct.setQuantity(userProduct.getQuantity() + 1);
@@ -33,11 +29,11 @@ public class UserProductService {
 
         } else {
             UserProduct userProduct = new UserProduct();
-            userProduct.setId(key);
+//            userProduct.setId(key);
             userProduct.setQuantity(1);
             userProductRepository.save(userProduct);
 //            return userProduct;
-        }
+        }*/
         return null;
     }
 /*

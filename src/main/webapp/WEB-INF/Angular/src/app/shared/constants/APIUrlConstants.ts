@@ -7,7 +7,7 @@ export class APIUrlConstants {
     public static API = 'api/';
     public static GATEWAY_CONTEXT_PATH = '/8080';
     public static LOG_IN = 'login';
-    public static OAUTH_TOKEN = 'api/oauth/token'
-
+    public static SIGN_UP = 'signup';
+    public static OAUTH_TOKEN = 'oauth/token';
 
 }

@@ -1,34 +1,28 @@
 package com.dal.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserProduct {
 
-    @EmbeddedId
-    private UserProductKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("user_id")
+    @ManyToOne
     private User user;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("product_id")
+    @ManyToOne
     private Product product;
 
-    int quantity;
+    private int quantity;
 
     @Transient
     public Product getProduct() {

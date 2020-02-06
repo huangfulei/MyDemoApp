@@ -1,23 +1,28 @@
 package com.controller;
 
+import com.configuration.security.IAuthenticationFacade;
 import com.configuration.util.AdminHelper;
 import com.dal.dao.RoleRepository;
 import com.dal.dao.UserRepository;
+import com.dal.entity.Role;
 import com.dal.entity.User;
+import com.model.AppConstants;
+import com.model.BaseModel;
 import com.model.UserModel;
 import com.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.Set;
 
 @RestController
 public class AuthController {
@@ -53,29 +58,28 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    UserModel signin(@RequestBody User requestUser) {
+    UserModel signin(@RequestBody UserModel userModel) throws Exception {
 
-        User user = userRepository.findByEmail(requestUser.getEmail()).get();
-        UserModel userModel = modelMapper.map(user, UserModel.class);
+
+/*        Authentication authentication = authenticate(requestUser.getUsername(),requestUser.getPassword());
+        User userDetails = (User) authentication.getPrincipal();*/
+        User user = userRepository.findByEmail(userModel.getUser().getEmail()).get();
+        UserModel responseModel = modelMapper.map(user, UserModel.class);
         System.out.println("user has logged in");
-        return userModel;
+        return responseModel;
     }
 
-/*    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
+    @PostMapping("/signup")
+    public User registerUser(@RequestBody User user) {
 
         adminHelper.permissionManage();
 
         if (userRepository.existsByUsername(user.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+            return null;
         }
 
         if (userRepository.existsByEmail(user.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
+            return null;
         }
 
         // Create new user's account
@@ -83,19 +87,16 @@ public class AuthController {
                 user.getEmail(),
                 passwordEncoder.encode(user.getPassword()));
 
-        Collection<Role> strRoles = user.getRoles();
-        Collection<Role> roles = new HashSet<>();
+        Set<Role> roles = user.getRoles();
 
-
-        if (strRoles == null) {
+        if (roles.isEmpty()) {
             Role userRole = roleRepository.findByName(AppConstants.CUSTOMER);
             roles.add(userRole);
         } else {
-            strRoles.forEach(role -> {
-                if ("admin".equals(role)) {
+            roles.forEach(role -> {
+                if (AppConstants.ADMIN.equals(role.getName())) {
                     Role adminRole = roleRepository.findByName(AppConstants.ADMIN);
-                    Role newRole = adminRole;
-                    roles.add(newRole);
+                    roles.add(adminRole);
                 }
             });
         }
@@ -103,8 +104,8 @@ public class AuthController {
         newUser.setRoles(roles);
         userRepository.save(newUser);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-    }*/
+        return newUser;
+    }
 
     private Authentication authenticate(String username, String password) throws Exception {
         try {

@@ -32,7 +32,7 @@ export class UserSessionService {
         return this.userSession;
     }
 
-    public getUserSession(user: { email: string, password: string }): Promise<any> {
+    public getUserSession(user: { user:{email: string, password: string} }): Promise<any> {
         // Fetch User session from the common controller
         return this.http.post(this.LOG_IN_ENDPOINT, user).toPromise();
     }

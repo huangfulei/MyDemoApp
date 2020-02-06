@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserProductController {
 
-    @Autowired
-    private UserProductService userProductService;
+    private final UserProductService userProductService;
+
+    public UserProductController(UserProductService userProductService) {
+        this.userProductService = userProductService;
+    }
 
     @PostMapping("/addProductToCart")
     public ResponseEntity<Order> addItemToCart(@RequestBody Product product) {

@@ -7,12 +7,15 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Fulei
  */
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "roles")
@@ -26,8 +29,6 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Getter
-    @Setter
     @Column(length = 20)
     private String name;
 
@@ -35,16 +36,14 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private Collection<User> users;*/
 
-    @Getter
-    @Setter
-    @ManyToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "roles_privileges",
             joinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "privilege_id", referencedColumnName = "id"))
-    private Collection<Privilege> privileges;
+    private Collection<Privilege> privileges = new HashSet<>();
 
 }

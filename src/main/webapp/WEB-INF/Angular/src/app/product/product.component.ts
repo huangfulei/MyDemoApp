@@ -4,7 +4,7 @@ import {Product} from "./product";
 import {MatDialog} from "@angular/material/dialog";
 import {LogInReminderComponent} from "../shared/pop-up/log-in-reminder/log-in-reminder.component";
 import {UserSessionService} from "../core/services/user-session.service";
-import {isNotNull} from "../shared/utility/common.utility";
+import {isEmptyObject, isNotNull, isNull} from "../shared/utility/common.utility";
 
 @Component({
     selector: 'app-product',
@@ -59,12 +59,15 @@ export class ProductComponent implements OnInit {
 
     public onAddToCart(product: Product) {
 
-        if (isNotNull(this.userSessionService.getUser())) {
+        if (isNull(this.userSessionService.getUser())) {
             this.openLoginReminder();
         } else {
 
             console.log(product);
-            this.productService.addItemToCart(product);
+            this.productService.addItemToCart(product).subscribe((response)=>{
+                console.log(response);
+            });
+
             // todo: text transition
 /*            // Kick off the first transition
             this.buttonTextState = 'transitioning';

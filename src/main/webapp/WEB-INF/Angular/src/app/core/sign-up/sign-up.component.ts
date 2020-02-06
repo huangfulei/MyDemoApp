@@ -13,7 +13,7 @@ import {UserService} from "../services/user.service";
 })
 export class SignUpComponent implements OnInit {
 
-    userInfo: User;
+    userInfo: any;
     private subs = new SubSink();
     uppercaseExp = '^(?=.*[A-Z]).+$';
     lowercaseExp = '^(?=.*[a-z]).+$';
@@ -56,10 +56,10 @@ export class SignUpComponent implements OnInit {
     }
 
     onSubmit() {
-        this.userInfo = new User();
-        /*this.userInfo.username = this.username.value;
+        this.userInfo = {};
+        this.userInfo.username = this.username.value;
         this.userInfo.password = this.password.value;
-        this.userInfo.email = this.email.value;*/
+        this.userInfo.email = this.email.value;
         this.userService.signUpUser(this.userInfo).subscribe((data: any) => {
                 this.route.navigate(['/login']);
             },

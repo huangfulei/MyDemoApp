@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
 
     public onSubmit() {
         this.loadingIndicatorService.startLoading();
-        let user = {email: this.f.email.value, password: this.f.password.value};
+        let user = {user:{email: this.f.email.value, password: this.f.password.value}};
         // stop here if form is invalid
         if (this.loginForm.invalid) {
             return;
@@ -53,9 +53,6 @@ export class LoginComponent implements OnInit {
 
         this.loginService.loginUser(user).subscribe(
             (data: Oauth2Response) => {
-                setTimeout(() => {
-                }, 10000);
-
                 console.log(data);
                 this.cookieService.set(SharedConstants.JWT_TOKEN, data.access_token);
                 this.cookieService.set(SharedConstants.JWT_REFRESH_TOKEN, data.refresh_token);
@@ -66,7 +63,8 @@ export class LoginComponent implements OnInit {
                 this.loadingIndicatorService.finishLoading();
             },
             () => {
-                if (isNotNull(this.userService.getUser())) {
+                // todo: change this to isNotNull(this.userService.getUser())
+                if (false) {
                     this.userService.setLoginStatus(true);
                     this.router.navigate([this.returnUrl]);
                     this.loadingIndicatorService.finishLoading();
@@ -76,8 +74,8 @@ export class LoginComponent implements OnInit {
                         this.globalData.user = response;
                         console.log(this.globalData.user);
                         // this.userTypeService.setUserTypeToUser();
-                        if (isNotNull(response[SharedConstants.USER])) {
-                            this.userService.setUserSession(response[SharedConstants.USER]);
+                        if (isNotNull(response)) {
+                            this.userService.setUserSession(response);
                         } else {
                             // this.userProfileConsoleLog();
                         }

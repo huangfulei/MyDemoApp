@@ -14,7 +14,7 @@ import {LoadingIndicatorService} from "../loading-indicator/loading-indicator.se
 export class LoginService {
 
     public userSession: Promise<any>;
-    private readonly LOG_IN_ENDPOINT = APIUrlConstants.API + APIUrlConstants.LOG_IN;
+    private readonly OAUTH_TOKEN_ENDPOINT = APIUrlConstants.API + APIUrlConstants.OAUTH_TOKEN;
 
     constructor(private readonly globalData: GlobalData,
                 private readonly userService: UserSessionService,
@@ -24,7 +24,7 @@ export class LoginService {
                 private readonly loadingIndicatorService: LoadingIndicatorService) {
     }
 
-    public loginUser(user: { email: string, password: string }): Observable<any> {
+    public loginUser(user:{user: { email: string, password: string }}): Observable<any> {
         this.loadingIndicatorService.startLoading();
         // get jwt token
         let headers =
@@ -35,10 +35,10 @@ export class LoginService {
         // let options = { headers: headers };
 
         const body = new HttpParams()
-            .set('username', user.email)
-            .set('password', user.password)
+            .set('username', user.user.email)
+            .set('password', user.user.password)
             .set('grant_type', 'password');
 
-        return this.http.post(this.LOG_IN_ENDPOINT, body, {headers});
+        return this.http.post(this.OAUTH_TOKEN_ENDPOINT, body, {headers});
     }
 }

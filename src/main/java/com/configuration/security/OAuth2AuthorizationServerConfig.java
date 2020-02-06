@@ -36,6 +36,9 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private CustomAccessTokenConverter customAccessTokenConverter;
+
     @Resource(name = "userService")
     private UserDetailsService userDetailsService;
 
@@ -108,7 +111,8 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("123");
+//        converter.setSigningKey("123");
+        converter.setAccessTokenConverter(customAccessTokenConverter);
         // final KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("mytest.jks"), "mypass".toCharArray());
         // converter.setKeyPair(keyStoreKeyFactory.getKeyPair("mytest"));
         return converter;
@@ -124,17 +128,4 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
         return new BCryptPasswordEncoder();
     }
 
-    /**
-     * used for getting extra info from jwt token
-     *
-     * @param auth Fulei
-     * @return
-     */
-    public Map<String, Object> getExtraInfo(OAuth2Authentication auth) {
-        OAuth2AuthenticationDetails details =
-                (OAuth2AuthenticationDetails) auth.getDetails();
-        OAuth2AccessToken accessToken = tokenStore()
-                .readAccessToken(details.getTokenValue());
-        return accessToken.getAdditionalInformation();
-    }
 }

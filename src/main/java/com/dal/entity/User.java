@@ -23,49 +23,35 @@ import java.util.Set;
 @NoArgsConstructor
 public class User {
 
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Getter
-    @Setter
     @Size(max = 20)
     private String username;
 
-    @Getter
-    @Setter
     @NotBlank
     @Size(max = 50)
     @Email
     private String email;
 
-    @Getter
-    @Setter
     @NotBlank
     @Size(max = 120)
-    @JsonIgnore
-    @ToString.Exclude
     private String password;
 
-/*    @Getter
-    @Setter
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Collection<Role> roles;*/
+    private Set<Role> roles = new HashSet<>();
 
 //    private Set<Role> role = new HashSet<>();
 
-/*    @Getter
-    @Setter
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<UserProduct> userProducts;*/
+//    @LazyCollection(LazyCollectionOption.FALSE)
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<UserProduct> userProducts;
 
     private Date createdAt;
 
