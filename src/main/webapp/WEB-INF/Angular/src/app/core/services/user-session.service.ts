@@ -4,17 +4,15 @@ import {SharedConstants} from "../../shared/constants/SharedConstants";
 import {Permission} from "../../shared/model/permission";
 import {Observable, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {GlobalData} from "./global-data";
 import {APIUrlConstants} from "../../shared/constants/APIUrlConstants";
-import {Router} from "@angular/router";
-import {LoadingIndicatorService} from "../loading-indicator/loading-indicator.service";
 import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserSessionService {
-    private readonly LOG_IN_ENDPOINT: string = APIUrlConstants.LOG_IN;
+    private readonly LOG_IN_ENDPOINT = APIUrlConstants.API + APIUrlConstants.LOG_IN;
+    private readonly OAUTH_TOKEN_ENDPOINT = APIUrlConstants.API + APIUrlConstants.OAUTH_TOKEN;
     private userSession: any = null;
     private loginStatus = new Subject<boolean>();
 
@@ -85,6 +83,6 @@ export class UserSessionService {
             .set('grant_type', 'refresh_token')
             .set('refresh_token', this.cookieService.get(SharedConstants.JWT_REFRESH_TOKEN));
 
-        return this.http.post<any>(APIUrlConstants.OAUTH_TOKEN, body, {headers});
+        return this.http.post<any>(this.OAUTH_TOKEN_ENDPOINT, body, {headers});
     }
 }

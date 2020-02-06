@@ -19,10 +19,7 @@ export class ProductService {
         return this.http.get(this.getProductUrl)
     }
 
-    public addItemToCart(product: Product) {
-        this.http.post('addProductToCart', product).subscribe((response) => {
-            console.log(response);
-            this.productSubject.next(response);
-        })
+    public addItemToCart(product: Product): Observable<any> {
+        return this.http.post('api/addProductToCart', product);
     }
 }

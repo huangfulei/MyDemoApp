@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from "./product.service";
-import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Product} from "./product";
 import {MatDialog} from "@angular/material/dialog";
 import {LogInReminderComponent} from "../shared/pop-up/log-in-reminder/log-in-reminder.component";
@@ -11,7 +10,7 @@ import {isNotNull} from "../shared/utility/common.utility";
     selector: 'app-product',
     templateUrl: './product.component.html',
     styleUrls: ['./product.component.css'],
-    animations: [
+    /*animations: [
         trigger('buttonTextStateTrigger', [
             state('shown', style({
                 opacity: 1
@@ -22,7 +21,7 @@ import {isNotNull} from "../shared/utility/common.utility";
             transition('shown => transitioning', animate('600ms ease-out')),
             transition('transitioning => shown', animate('600ms ease-in'))
         ])
-    ]
+    ]*/
 })
 export class ProductComponent implements OnInit {
     public name: string;
@@ -32,7 +31,7 @@ export class ProductComponent implements OnInit {
     // The current state of the button text
     public buttonTextState = 'shown';
     // The text currently being show
-    // public buttonText = 'ADD TO CART';
+    public buttonText = 'ADD TO CART';
     // The text that will be shown when the transition is finished
     public transitionButtonText = 'ADD TO CART';
 
@@ -49,22 +48,25 @@ export class ProductComponent implements OnInit {
         sourceImg.src = targetImage.src;
     }
 
-    /**
+/*    /!**
      * Respond to the transition event of the button text
      * by setting the text awaiting transition then setting the state as shown
-     */
-    public buttonTextTransitioned(btn) {
-        btn.textContent = this.transitionButtonText;
-        console.log(btn.textContent);
+     *!/
+    public buttonTextTransitioned() {
+        this.buttonText = this.transitionButtonText;
         this.buttonTextState = this.buttonTextState = 'shown';
-    }
+    }*/
 
-    public onAddToCart(product: Product, btn: any) {
+    public onAddToCart(product: Product) {
 
         if (isNotNull(this.userSessionService.getUser())) {
             this.openLoginReminder();
         } else {
-            // Kick off the first transition
+
+            console.log(product);
+            this.productService.addItemToCart(product);
+            // todo: text transition
+/*            // Kick off the first transition
             this.buttonTextState = 'transitioning';
             this.transitionButtonText = 'ADDED';
 
@@ -75,7 +77,7 @@ export class ProductComponent implements OnInit {
             setTimeout(() => {
                 this.buttonTextState = 'transitioning';
                 this.transitionButtonText = 'ADD TO CART';
-            }, 1500);
+            }, 1500);*/
         }
     }
 

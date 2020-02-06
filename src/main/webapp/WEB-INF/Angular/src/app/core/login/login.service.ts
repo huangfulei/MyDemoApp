@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {GlobalData} from "../services/global-data";
 import {UserSessionService} from "../services/user-session.service";
-import {LogoutService} from "../services/logout.service";
 import {UserTypeService} from "../services/user-type.service";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {APIUrlConstants} from "../../shared/constants/APIUrlConstants";
@@ -15,6 +14,7 @@ import {LoadingIndicatorService} from "../loading-indicator/loading-indicator.se
 export class LoginService {
 
     public userSession: Promise<any>;
+    private readonly LOG_IN_ENDPOINT = APIUrlConstants.API + APIUrlConstants.LOG_IN;
 
     constructor(private readonly globalData: GlobalData,
                 private readonly userService: UserSessionService,
@@ -39,6 +39,6 @@ export class LoginService {
             .set('password', user.password)
             .set('grant_type', 'password');
 
-        return this.http.post(APIUrlConstants.OAUTH_TOKEN, body, {headers});
+        return this.http.post(this.LOG_IN_ENDPOINT, body, {headers});
     }
 }

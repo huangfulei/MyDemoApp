@@ -63,11 +63,13 @@ export class LoginComponent implements OnInit {
             (error) => {
                 console.log(error);
                 this.error = error.error.error_description;
+                this.loadingIndicatorService.finishLoading();
             },
             () => {
                 if (isNotNull(this.userService.getUser())) {
                     this.userService.setLoginStatus(true);
                     this.router.navigate([this.returnUrl]);
+                    this.loadingIndicatorService.finishLoading();
                 } else {
                     this.userService.getUserSession(user).then((response: any) => {
                         console.log(response);
@@ -91,6 +93,7 @@ export class LoginComponent implements OnInit {
                     }).catch((error) => {
                         console.error(error);
                         this.error = error.error.error_description;
+                        this.loadingIndicatorService.finishLoading();
                     });
                 }
             });

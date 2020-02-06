@@ -63,13 +63,12 @@
     opacity: 0.7;
 }
 .btn{
-    display: block;
+    width: 100%;
     background: #6ab04c;
     text-align: center;
     color: #fff;
-    padding: 10px;
+    padding: 5px;
     margin-top: 10px;
-    transition: 0.3s;
 }
 .btn:hover{
     background: orange;

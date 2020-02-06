@@ -4,8 +4,9 @@ export class APIUrlConstants {
     public static NO_ACCESS_URL = '/assets/html/no-access.html';
 
     //todo: check the context path
+    public static API = 'api/';
     public static GATEWAY_CONTEXT_PATH = '/8080';
-    public static LOG_IN = 'api/login';
+    public static LOG_IN = 'login';
     public static OAUTH_TOKEN = 'api/oauth/token'
 
 

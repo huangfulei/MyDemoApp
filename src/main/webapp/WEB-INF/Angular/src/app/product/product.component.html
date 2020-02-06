@@ -13,9 +13,10 @@
         <div class="product-info">
             <div class="name">{{product.name}}</div>
             <div class="dis">{{product.description}}</div>
-            <a #btn class="btn" [@buttonTextStateTrigger]="buttonTextState"
+           <!-- <a #btn class="btn" [@buttonTextStateTrigger]="buttonTextState"
                (@buttonTextStateTrigger.done)="buttonTextTransitioned(btn)"
-               (click)="onAddToCart(product,btn)">ADD TO CART</a>
+               (click)="onAddToCart(product,btn)">ADD TO CART</a>-->
+            <button mat-button class="btn" (click)="onAddToCart(product)">{{buttonText}}</button>
         </div>
     </mat-card>
 
