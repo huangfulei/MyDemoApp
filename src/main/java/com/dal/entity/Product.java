@@ -6,7 +6,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "products", uniqueConstraints = {
         @UniqueConstraint(columnNames = "name")
 })

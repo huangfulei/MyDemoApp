@@ -17,10 +17,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
@@ -32,12 +29,9 @@ import java.util.Map;
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private CustomAccessTokenConverter customAccessTokenConverter;
+    private final CustomAccessTokenConverter customAccessTokenConverter;
 
     @Resource(name = "userService")
     private UserDetailsService userDetailsService;
@@ -61,6 +55,10 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     static final String SCOPE_WRITE = "write";
     static final String TRUST = "trust";
 
+    public OAuth2AuthorizationServerConfig(@Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager, CustomAccessTokenConverter customAccessTokenConverter) {
+        this.authenticationManager = authenticationManager;
+        this.customAccessTokenConverter = customAccessTokenConverter;
+    }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
@@ -96,10 +94,11 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
 
     @Bean
     @Primary
-    public DefaultTokenServices tokenServices() {
+    public AuthorizationServerTokenServices tokenServices() {
         final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
+        defaultTokenServices.setTokenEnhancer(tokenEnhancer());
         return defaultTokenServices;
     }
 
@@ -121,11 +120,6 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     @Bean
     public TokenEnhancer tokenEnhancer() {
         return new CustomTokenEnhancer();
-    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
 }

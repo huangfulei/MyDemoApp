@@ -15,7 +15,8 @@ import java.util.Set;
  * @author Fulei
  */
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")

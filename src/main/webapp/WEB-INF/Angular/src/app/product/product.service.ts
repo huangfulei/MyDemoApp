@@ -7,7 +7,7 @@ import {Product} from "./product";
     providedIn: "root"
 })
 export class ProductService {
-
+    private modelName = 'product';
     private productSubject = new BehaviorSubject<any>({});
     private getProductUrl = 'api/products';
     public updatedProduct = this.productSubject.asObservable();
@@ -20,6 +20,8 @@ export class ProductService {
     }
 
     public addItemToCart(product: Product): Observable<any> {
-        return this.http.post('api/addProductToCart', product);
+        const postModel = {};
+        postModel[this.modelName] = product;
+        return this.http.post('api/addProductToCart', postModel);
     }
 }

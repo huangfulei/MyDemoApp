@@ -26,14 +26,14 @@ import javax.annotation.Resource;
 @EnableWebSecurity
 public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Resource(name = "userService")
     private UserDetailsService userDetailsService;
+
+    public ServerSecurityConfig(CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
+        this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
+    }
 
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
@@ -47,7 +47,7 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoder);
+        provider.setPasswordEncoder(passwordEncoder());
         provider.setUserDetailsService(userDetailsService);
         return provider;
     }
@@ -77,4 +77,10 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/*.css");
         web.ignoring().antMatchers("/static/assets/**");
     }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }

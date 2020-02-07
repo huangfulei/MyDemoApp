@@ -1,14 +1,12 @@
 package com.dal.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Fulei

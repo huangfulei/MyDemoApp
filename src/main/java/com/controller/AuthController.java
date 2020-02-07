@@ -6,6 +6,7 @@ import com.dal.dao.RoleRepository;
 import com.dal.dao.UserRepository;
 import com.dal.entity.Role;
 import com.dal.entity.User;
+import com.exceptions.ValidationException;
 import com.model.AppConstants;
 import com.model.BaseModel;
 import com.model.UserModel;
@@ -60,10 +61,10 @@ public class AuthController {
     @PostMapping("/login")
     UserModel signin(@RequestBody UserModel userModel) throws Exception {
 
+        // todo: throw right exception
+        User user = userRepository.findById(userModel.getUser().getId())
+                .orElseThrow(()-> new ValidationException("User not found"));
 
-/*        Authentication authentication = authenticate(requestUser.getUsername(),requestUser.getPassword());
-        User userDetails = (User) authentication.getPrincipal();*/
-        User user = userRepository.findByEmail(userModel.getUser().getEmail()).get();
         UserModel responseModel = modelMapper.map(user, UserModel.class);
         System.out.println("user has logged in");
         return responseModel;

@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class BaseData implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private String id;
+    private Long id;
     private String name;
 
 }

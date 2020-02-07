@@ -1,40 +1,39 @@
 package com.service;
 
+import com.configuration.util.DataUtil;
 import com.dal.dao.UserProductRepository;
-import com.dal.dao.UserRepository;
-import com.dal.entity.*;
+import com.dal.entity.UserProduct;
+import com.model.ProductModel;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 @Service
-@Transactional
-public class UserProductService {
+public class UserProductService extends BaseService {
 
     private final UserProductRepository userProductRepository;
-    private final UserRepository userRepository;
 
-    public UserProductService(UserProductRepository userProductRepository, UserRepository userRepository) {
+    public UserProductService(UserProductRepository userProductRepository) {
         this.userProductRepository = userProductRepository;
-        this.userRepository = userRepository;
     }
 
-    public Order addProductToCart(Product product) {
+    public void addProductToCart(ProductModel product) {
 
-        /*if (userProductRepository.existsById(key)) {
+        ArrayList<UserProduct> userProducts = (ArrayList<UserProduct>) userProductRepository.findByUser_Id(product.getUser().getId());
 
-            UserProduct userProduct = userProductRepository.findById(key).get();
-            userProduct.setQuantity(userProduct.getQuantity() + 1);
-            userProductRepository.save(userProduct);
-//            return userProduct;
+        UserProduct newUserProduct = userProducts.stream().filter(userProduct -> userProduct.getProduct().getId().equals(product.getProduct().getId()))
+                .findAny()
+                .orElse(null);
 
-        } else {
-            UserProduct userProduct = new UserProduct();
-//            userProduct.setId(key);
-            userProduct.setQuantity(1);
-            userProductRepository.save(userProduct);
-//            return userProduct;
-        }*/
-        return null;
+        if (DataUtil.isNull(newUserProduct)) {
+            newUserProduct = map(product, UserProduct.class);
+        }
+        newUserProduct.setQuantity(newUserProduct.getQuantity() + 1);
+
+        userProductRepository.save(newUserProduct);
+
+        //todo: add messages to the model
+
     }
 /*
     private boolean productExist(LoggedUser user, Product product) {
