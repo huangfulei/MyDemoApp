@@ -51,7 +51,7 @@ public class User {
 
 //    @LazyCollection(LazyCollectionOption.FALSE)
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user")
     private Set<UserProduct> userProducts;
 
     private Date createdAt;

@@ -1,7 +1,6 @@
 export class Product {
     id: number;
-    name: string;
-    description: string;
-    price: number;
-    stock: number;
+    product: any;
+    totalPrice: number;
+    quantity: number;
 }

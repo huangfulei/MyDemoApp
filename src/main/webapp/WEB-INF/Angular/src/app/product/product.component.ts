@@ -5,6 +5,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {LogInReminderComponent} from "../shared/pop-up/log-in-reminder/log-in-reminder.component";
 import {UserSessionService} from "../core/services/user-session.service";
 import {isEmptyObject, isNotNull, isNull} from "../shared/utility/common.utility";
+import {CartService} from "../cart/cart.service";
 
 @Component({
     selector: 'app-product',
@@ -36,6 +37,7 @@ export class ProductComponent implements OnInit {
     public transitionButtonText = 'ADD TO CART';
 
     constructor(private readonly productService: ProductService,
+                private readonly cartService: CartService,
                 private readonly userSessionService: UserSessionService,
                 private dialog: MatDialog) {
     }
@@ -64,7 +66,7 @@ export class ProductComponent implements OnInit {
         } else {
 
             console.log(product);
-            this.productService.addItemToCart(product).subscribe((response)=>{
+            this.cartService.addItemToCart(product).subscribe((response)=>{
                 console.log(response);
             });
 

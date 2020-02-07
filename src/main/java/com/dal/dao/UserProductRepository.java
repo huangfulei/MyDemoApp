@@ -1,10 +1,6 @@
 package com.dal.dao;
 
-import com.dal.entity.Product;
-import com.dal.entity.User;
 import com.dal.entity.UserProduct;
-import com.dal.entity.UserProductKey;
-import com.model.data.UserData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

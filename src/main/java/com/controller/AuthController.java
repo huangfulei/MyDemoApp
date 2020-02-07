@@ -62,7 +62,7 @@ public class AuthController {
     UserModel signin(@RequestBody UserModel userModel) throws Exception {
 
         // todo: throw right exception
-        User user = userRepository.findById(userModel.getUser().getId())
+        User user = userRepository.findByEmail(userModel.getUser().getEmail())
                 .orElseThrow(()-> new ValidationException("User not found"));
 
         UserModel responseModel = modelMapper.map(user, UserModel.class);

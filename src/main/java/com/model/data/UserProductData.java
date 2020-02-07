@@ -1,18 +1,17 @@
 package com.model.data;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 @Getter
 @Setter
 @NoArgsConstructor
-public class BaseData implements Serializable {
-    public static final long serialVersionUID = 1L;
-
+public class UserProductData {
     private Long id;
-    private String name;
-
+    private UserData user;
+    private ProductData product;
+    private int quantity;
+    private Number totalPrice;
 }

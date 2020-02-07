@@ -4,6 +4,7 @@ import com.configuration.security.IAuthenticationFacade;
 import com.configuration.util.DataUtil;
 import com.model.BaseModel;
 import com.model.data.UserData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -20,11 +21,8 @@ import java.util.HashMap;
 @RestControllerAdvice
 public class AuthenticationRequestBodyAdvice implements RequestBodyAdvice {
 
-    private final IAuthenticationFacade authenticationFacade;
-
-    public AuthenticationRequestBodyAdvice(IAuthenticationFacade authenticationFacade) {
-        this.authenticationFacade = authenticationFacade;
-    }
+    @Autowired
+    private IAuthenticationFacade authenticationFacade;
 
     @Override
     public boolean supports(MethodParameter methodParameter, Type type, Class<? extends HttpMessageConverter<?>> aClass) {
@@ -41,7 +39,7 @@ public class AuthenticationRequestBodyAdvice implements RequestBodyAdvice {
         BaseModel request = (BaseModel) o;
 
         Authentication authentication = authenticationFacade.getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+        if (DataUtil.isNotNull(authentication)) {
             HashMap detail = (HashMap) ((OAuth2AuthenticationDetails) authentication.getDetails()).getDecodedDetails();
             if (DataUtil.isNull(request.getUser())) {
                 request.setUser(new UserData());

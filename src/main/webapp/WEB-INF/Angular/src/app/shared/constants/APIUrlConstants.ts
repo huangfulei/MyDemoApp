@@ -9,5 +9,7 @@ export class APIUrlConstants {
     public static LOG_IN = 'login';
     public static SIGN_UP = 'signup';
     public static OAUTH_TOKEN = 'oauth/token';
+    public static CART = 'cart/';
+    static HTTP_SEARCH ='search';
 
 }

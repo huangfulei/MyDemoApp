@@ -1,7 +1,10 @@
 package com.dal.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -18,6 +21,7 @@ public class UserProduct {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     @ManyToOne
@@ -31,7 +35,6 @@ public class UserProduct {
     }
 
     @Transient
-    @JsonIgnore
     public Integer getTotalPrice() {
         return getProduct().getPrice() * this.quantity;
     }

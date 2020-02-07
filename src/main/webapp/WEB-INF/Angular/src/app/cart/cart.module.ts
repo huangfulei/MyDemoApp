@@ -1,18 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { CartRoutingModule } from './cart-routing.module';
+import {CartRoutingModule} from './cart-routing.module';
 import {CartComponent} from "./cart.component";
-import {MatListModule} from "@angular/material/list";
 import {MaterialModule} from "../shared/material.module";
+import {CartService} from "./cart.service";
 
 
 @NgModule({
-  declarations: [CartComponent],
+    declarations: [CartComponent],
     imports: [
         CommonModule,
         CartRoutingModule,
         MaterialModule
-    ]
+    ],
+    providers: [CartService]
 })
-export class CartModule { }
+export class CartModule {
+}

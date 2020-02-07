@@ -4,9 +4,13 @@ import com.configuration.util.DataUtil;
 import com.dal.dao.UserProductRepository;
 import com.dal.entity.UserProduct;
 import com.model.ProductModel;
+import com.model.UserProductModel;
+import com.model.data.ProductData;
+import com.model.data.UserProductData;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserProductService extends BaseService {
@@ -34,6 +38,14 @@ public class UserProductService extends BaseService {
 
         //todo: add messages to the model
 
+    }
+
+    public ProductModel search(ProductModel productModel) {
+
+        List<UserProduct> userProductList = userProductRepository.findByUser_Id(productModel.getUser().getId());
+        productModel.setResultList(mapAll(userProductList, UserProductData.class));
+
+        return productModel;
     }
 /*
     private boolean productExist(LoggedUser user, Product product) {
