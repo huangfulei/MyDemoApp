@@ -9,18 +9,17 @@ import {Observable} from "rxjs";
 })
 export class CartService extends CommonService {
 
-    private readonly cartModel = 'product';
+    private readonly MODEL_NAME = 'product';
     private readonly CART_ENDPOINT = APIUrlConstants.CART;
+    private readonly ADD_TO_CART_ENDPOINT = this.CART_ENDPOINT + APIUrlConstants.ADD_TO_CART;
 
     constructor() {
         super();
         super.setApiEndpoint(this.CART_ENDPOINT);
-        super.setModelName(this.cartModel);
+        super.setModelName(this.MODEL_NAME);
     }
 
     public addItemToCart(product: Product): Observable<any> {
-        const postModel = {};
-        postModel[this.cartModel] = product;
-        return this.http.post(this.CART_ENDPOINT + 'addProductToCart', postModel);
+        return this.simplePost(this.MODEL_NAME, product, this.ADD_TO_CART_ENDPOINT);
     }
 }

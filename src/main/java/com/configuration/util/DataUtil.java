@@ -1,24 +1,15 @@
 package com.configuration.util;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import java.util.*;
 
 public class DataUtil {
     private static final Logger LOGGER = Logger.getLogger(DataUtil.class);
@@ -28,26 +19,26 @@ public class DataUtil {
     }
 
     public static String[] combineStringArrays(final List<String[]> stringArrayList) {
-        if (isEmpty((Collection)stringArrayList)) {
+        if (isEmpty((Collection) stringArrayList)) {
             return null;
         } else {
             List<String> stringList = new ArrayList();
             Iterator var2 = stringArrayList.iterator();
 
-            while(true) {
+            while (true) {
                 String[] stringArray;
                 do {
                     if (!var2.hasNext()) {
-                        return (String[])stringList.toArray(new String[stringList.size()]);
+                        return (String[]) stringList.toArray(new String[stringList.size()]);
                     }
 
-                    stringArray = (String[])var2.next();
-                } while(!isNotEmpty((Object[])stringArray));
+                    stringArray = (String[]) var2.next();
+                } while (!isNotEmpty((Object[]) stringArray));
 
                 String[] var4 = stringArray;
                 int var5 = stringArray.length;
 
-                for(int var6 = 0; var6 < var5; ++var6) {
+                for (int var6 = 0; var6 < var5; ++var6) {
                     String string = var4[var6];
                     stringList.add(string);
                 }
@@ -158,11 +149,11 @@ public class DataUtil {
 
     public static Date stringToDate(final String stringDate, final String... dateFormats) {
         Date date = null;
-        if (hasAValue(stringDate) && isNotEmpty((Object[])dateFormats)) {
+        if (hasAValue(stringDate) && isNotEmpty((Object[]) dateFormats)) {
             String[] var3 = dateFormats;
             int var4 = dateFormats.length;
 
-            for(int var5 = 0; var5 < var4; ++var5) {
+            for (int var5 = 0; var5 < var4; ++var5) {
                 String dateFormat = var3[var5];
                 date = getDate(stringDate, dateFormat);
                 if (isNotNull(date)) {
@@ -276,7 +267,7 @@ public class DataUtil {
     }
 
     public static long getLong(final int i) {
-        return Long.valueOf((long)i);
+        return Long.valueOf((long) i);
     }
 
     public static BigDecimal getBigDecimal(final String str) {
@@ -324,7 +315,7 @@ public class DataUtil {
                 }
 
                 each = var2.next();
-            } while(set.add((T) each));
+            } while (set.add((T) each));
 
             return true;
         }
@@ -347,7 +338,7 @@ public class DataUtil {
             runCal.set(5, currentCal.get(5));
             runCal.set(2, currentCal.get(2));
             runCal.set(1, currentCal.get(1));
-            return (int)(currentCal.getTimeInMillis() - runCal.getTimeInMillis());
+            return (int) (currentCal.getTimeInMillis() - runCal.getTimeInMillis());
         } else {
             return null;
         }
@@ -436,7 +427,7 @@ public class DataUtil {
             Object[] var1 = objects;
             int var2 = objects.length;
 
-            for(int var3 = 0; var3 < var2; ++var3) {
+            for (int var3 = 0; var3 < var2; ++var3) {
                 Object object = var1[var3];
                 if (isNull(object)) {
                     return true;
@@ -470,15 +461,15 @@ public class DataUtil {
     }
 
     public static String buildDotNotation(final String... stringArray) {
-        return (String)nullSafe(StringUtils.join(stringArray, "."), "");
+        return (String) nullSafe(StringUtils.join(stringArray, "."), "");
     }
 
     public static <T> List<List<T>> splitList(final List<T> originalList, final int chunkSize) {
         List<List<T>> listChunks = new ArrayList();
-        if (isEmpty((Collection)originalList)) {
+        if (isEmpty((Collection) originalList)) {
             listChunks.add(Collections.emptyList());
         } else {
-            for(int start = 0; start < originalList.size(); start += chunkSize) {
+            for (int start = 0; start < originalList.size(); start += chunkSize) {
                 int end = Math.min(start + chunkSize, originalList.size());
                 listChunks.add(originalList.subList(start, end));
             }

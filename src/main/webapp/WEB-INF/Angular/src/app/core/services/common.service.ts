@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {APIUrlConstants} from "../../shared/constants/APIUrlConstants";
 import {AppInjector} from "./app-injector";
 import {BaseModel} from "../../shared/model/base-model";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {isNotNull, isNull} from "../../shared/utility/common.utility";
 import {SharedConstants} from "../../shared/constants/SharedConstants";
 
@@ -23,6 +23,33 @@ export class CommonService {
 
     protected setApiEndpoint(apiEndpoint: string) {
         this.apiEndpoint = apiEndpoint;
+    }
+
+    public simpleGet({endpoint}): Observable<any> {
+        // Construct model for Filtering
+        return this.http
+            .get(endpoint).pipe(
+                map(response => {
+                    // TODO: do validation mapping.
+
+                    return response;
+                }),
+                catchError(error => this.handleError(error)),);
+    }
+
+    public simplePost(modelName: string, data: any, overrideEndpoint: string, options?: any): Observable<any> {
+        let postModel = {};
+        postModel[modelName] = data;
+        return this.http
+            .post(overrideEndpoint, postModel, options).pipe(
+                map(response => {
+                    /*if (!this.messageService.processMessage(response)) {
+                        throw observableThrowError(response);
+                    }*/
+                    // TODO: do validation mapping.
+                    return response;
+                }),
+                catchError(error => this.handleError(error)),);
     }
 
     public search(model?: any): Observable<any> {
@@ -60,11 +87,21 @@ export class CommonService {
                     outModel = response;
                 }
                 return outModel;
-            }))/*,
+            }),
             // TODO is there some reason '), )' is used at the end of this line?
             //  If not, remove it here and all other places
-            catchError(error => {
-                console.log(error);
-            }));*/
+            catchError(error => this.handleError(error)),);
+    }
+
+    private handleError(error: any): Promise<any> {
+        console.log('Error in Common Service', error);
+        // Show the error message
+        if (isNotNull(error.message)) {
+            // this.messageService.systemFailure(error.message);
+        } else if (!(error instanceof Object)) {
+            // this.messageService.systemFailure(error);
+        }
+        // Throw a reject
+        return Promise.reject(error.message || error);
     }
 }

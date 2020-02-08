@@ -3,8 +3,7 @@ import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {SubSink} from "subsink";
-import {User} from "../../shared/model/user";
-import {UserService} from "../services/user.service";
+import {SignUpService} from "./sign-up.service";
 
 @Component({
     selector: 'app-sign-up',
@@ -23,7 +22,7 @@ export class SignUpComponent implements OnInit {
     public error: string;
 
     constructor(private fb: FormBuilder,
-                private userService: UserService,
+                private signUpService: SignUpService,
                 private route: Router,
                 private snackBar: MatSnackBar) {
     }
@@ -48,7 +47,8 @@ export class SignUpComponent implements OnInit {
         }, {validator: confirmPassword('password', 'confirmPass')});
     }
 
-    openSnackBar(message: string, action: string) {
+    // todo: open only successful
+    public openSnackBar(message: string, action: string) {
         this.snackBar.open(message, action, {
             duration: 4000,
             panelClass: ['red-snackbar']
@@ -60,13 +60,13 @@ export class SignUpComponent implements OnInit {
         this.userInfo.username = this.username.value;
         this.userInfo.password = this.password.value;
         this.userInfo.email = this.email.value;
-        this.userService.signUpUser(this.userInfo).subscribe((data: any) => {
+        this.signUpService.signUp(this.userInfo).subscribe((data: any) => {
                 this.route.navigate(['/login']);
             },
             // todo: error handling
             (response) => {
-            console.log(response);
-            this.error = response.error.message;
+                console.log(response);
+                this.error = response.error.message;
             });
     }
 

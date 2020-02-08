@@ -21,7 +21,6 @@ public class UserProduct {
     private Long id;
 
     @ManyToOne
-    @JsonIgnore
     private User user;
 
     @ManyToOne

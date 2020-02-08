@@ -9,6 +9,7 @@ import {UserSessionService} from "../services/user-session.service";
 import {isNotNull, isNull} from "../../shared/utility/common.utility";
 import {GlobalData} from "../services/global-data";
 import {Router} from "@angular/router";
+import {UserTypeService} from "../services/user-type.service";
 
 @Component({
     selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
         private readonly loginService: LoginService,
         private readonly cookieService: CookieService,
         private readonly userService: UserSessionService,
+        private readonly userTypeService: UserTypeService,
         private readonly globalData: GlobalData,
         private readonly router: Router,
         private readonly loadingIndicatorService: LoadingIndicatorService) {
@@ -73,6 +75,7 @@ export class LoginComponent implements OnInit {
                         console.log(response);
                         this.globalData.user = response;
                         console.log(this.globalData.user);
+                        // todo: set user type for different view permission
                         // this.userTypeService.setUserTypeToUser();
                         if (isNotNull(response)) {
                             this.userService.setUserSession(response);

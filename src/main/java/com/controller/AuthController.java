@@ -1,6 +1,5 @@
 package com.controller;
 
-import com.configuration.security.IAuthenticationFacade;
 import com.configuration.util.AdminHelper;
 import com.dal.dao.RoleRepository;
 import com.dal.dao.UserRepository;
@@ -8,14 +7,14 @@ import com.dal.entity.Role;
 import com.dal.entity.User;
 import com.exceptions.ValidationException;
 import com.model.AppConstants;
-import com.model.BaseModel;
 import com.model.UserModel;
 import com.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +41,7 @@ public class AuthController {
 
     private final ModelMapper modelMapper;
 
+    // todo: move the logic to userService class
     public AuthController(AuthenticationManager authenticationManager, AdminHelper adminHelper, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, UserService userService, ModelMapper modelMapper) {
         this.authenticationManager = authenticationManager;
         this.adminHelper = adminHelper;
@@ -63,7 +63,7 @@ public class AuthController {
 
         // todo: throw right exception
         User user = userRepository.findByEmail(userModel.getUser().getEmail())
-                .orElseThrow(()-> new ValidationException("User not found"));
+                .orElseThrow(() -> new ValidationException("User not found"));
 
         UserModel responseModel = modelMapper.map(user, UserModel.class);
         System.out.println("user has logged in");
@@ -71,24 +71,24 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public User registerUser(@RequestBody User user) {
+    public UserModel registerUser(@RequestBody UserModel userModel) {
 
-        adminHelper.permissionManage();
+        // adminHelper.permissionManage();
 
-        if (userRepository.existsByUsername(user.getUsername())) {
+        if (userRepository.existsByUsername(userModel.getUser().getUsername())) {
             return null;
         }
 
-        if (userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(userModel.getUser().getEmail())) {
             return null;
         }
 
         // Create new user's account
-        User newUser = new User(user.getUsername(),
-                user.getEmail(),
-                passwordEncoder.encode(user.getPassword()));
+        User newUser = new User(userModel.getUser().getUsername(),
+                userModel.getUser().getEmail(),
+                passwordEncoder.encode(userModel.getUser().getPassword()));
 
-        Set<Role> roles = user.getRoles();
+        Set<Role> roles = userModel.getUser().getRoles();
 
         if (roles.isEmpty()) {
             Role userRole = roleRepository.findByName(AppConstants.CUSTOMER);
@@ -105,7 +105,7 @@ public class AuthController {
         newUser.setRoles(roles);
         userRepository.save(newUser);
 
-        return newUser;
+        return userModel;
     }
 
     private Authentication authenticate(String username, String password) throws Exception {

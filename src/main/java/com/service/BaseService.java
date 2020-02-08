@@ -14,13 +14,17 @@ public class BaseService {
     @Autowired
     private ModelMapper modelMapper;
 
-    protected <D, T> D map(T source, Class<D> targetType) {
+    protected <S, T> T map(S source, Class<T> targetType) {
         return this.modelMapper.map(source, targetType);
     }
 
-    protected <D, T> List<D> mapAll(final Collection<T> sourceList, Class<D> targetType) {
+    protected <S, T> List<T> mapAll(final Collection<S> sourceList, Class<T> targetType) {
         return sourceList.stream()
                 .map(source -> map(source, targetType))
                 .collect(Collectors.toList());
+    }
+    protected <S, T> T map(final S source, T target) {
+        modelMapper.map(source, target);
+        return target;
     }
 }

@@ -11,5 +11,6 @@ export class APIUrlConstants {
     public static OAUTH_TOKEN = 'oauth/token';
     public static CART = 'cart/';
     static HTTP_SEARCH ='search';
+    static ADD_TO_CART = 'addProductToCart';
 
 }

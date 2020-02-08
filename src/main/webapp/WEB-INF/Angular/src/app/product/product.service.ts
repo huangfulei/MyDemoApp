@@ -6,7 +6,7 @@ import {BehaviorSubject, Observable} from "rxjs";
     providedIn: "root"
 })
 export class ProductService {
-    private modelName = 'product';
+    private MODEL_NAME = 'product';
     private productSubject = new BehaviorSubject<any>({});
     private getProductUrl = 'products';
     public updatedProduct = this.productSubject.asObservable();

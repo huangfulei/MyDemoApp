@@ -15,9 +15,13 @@ export class UserSessionService {
     private readonly OAUTH_TOKEN_ENDPOINT = APIUrlConstants.OAUTH_TOKEN;
     private userSession: any = null;
     private loginStatus = new Subject<boolean>();
+    // public currentUser: Observable<User>;
+    // private currentUserSubject: BehaviorSubject<User>;
 
     constructor(private readonly http: HttpClient,
                 private readonly cookieService: CookieService) {
+        // this.currentUserSubject = new BehaviorSubject<User>(this.cookieService.get(SharedConstants.JWT_TOKEN)));
+        // this.currentUser = this.currentUserSubject.asObservable();
     }
 
     public setLoginStatus(status: boolean) {
@@ -32,7 +36,7 @@ export class UserSessionService {
         return this.userSession;
     }
 
-    public getUserSession(user: { user:{email: string, password: string} }): Promise<any> {
+    public getUserSession(user: { user: { email: string, password: string } }): Promise<any> {
         // Fetch User session from the common controller
         return this.http.post(this.LOG_IN_ENDPOINT, user).toPromise();
     }
