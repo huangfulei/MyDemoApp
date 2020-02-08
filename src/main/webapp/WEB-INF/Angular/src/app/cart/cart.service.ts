@@ -10,7 +10,7 @@ import {Observable} from "rxjs";
 export class CartService extends CommonService {
 
     private readonly cartModel = 'product';
-    private readonly CART_ENDPOINT = APIUrlConstants.API + APIUrlConstants.CART;
+    private readonly CART_ENDPOINT = APIUrlConstants.CART;
 
     constructor() {
         super();

@@ -14,7 +14,7 @@ import {LoadingIndicatorService} from "../loading-indicator/loading-indicator.se
 export class LoginService {
 
     public userSession: Promise<any>;
-    private readonly OAUTH_TOKEN_ENDPOINT = APIUrlConstants.API + APIUrlConstants.OAUTH_TOKEN;
+    private readonly OAUTH_TOKEN_ENDPOINT = APIUrlConstants.OAUTH_TOKEN;
 
     constructor(private readonly globalData: GlobalData,
                 private readonly userService: UserSessionService,

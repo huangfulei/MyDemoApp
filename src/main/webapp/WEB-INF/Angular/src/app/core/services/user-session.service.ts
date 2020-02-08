@@ -11,8 +11,8 @@ import {CookieService} from "ngx-cookie-service";
     providedIn: 'root'
 })
 export class UserSessionService {
-    private readonly LOG_IN_ENDPOINT = APIUrlConstants.API + APIUrlConstants.LOG_IN;
-    private readonly OAUTH_TOKEN_ENDPOINT = APIUrlConstants.API + APIUrlConstants.OAUTH_TOKEN;
+    private readonly LOG_IN_ENDPOINT = APIUrlConstants.LOG_IN;
+    private readonly OAUTH_TOKEN_ENDPOINT = APIUrlConstants.OAUTH_TOKEN;
     private userSession: any = null;
     private loginStatus = new Subject<boolean>();
 

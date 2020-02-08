@@ -8,7 +8,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 export class ProductService {
     private modelName = 'product';
     private productSubject = new BehaviorSubject<any>({});
-    private getProductUrl = 'api/products';
+    private getProductUrl = 'products';
     public updatedProduct = this.productSubject.asObservable();
 
     constructor(private readonly http: HttpClient,) {

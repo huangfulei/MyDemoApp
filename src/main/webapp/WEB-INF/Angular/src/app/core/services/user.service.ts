@@ -11,7 +11,7 @@ export class UserService {
 
     public currentUser: Observable<User>;
     private currentUserSubject: BehaviorSubject<User>;
-    private readonly SIGN_UP_ENDPOINT = APIUrlConstants.API + APIUrlConstants.SIGN_UP;
+    private readonly SIGN_UP_ENDPOINT = APIUrlConstants.SIGN_UP;
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
