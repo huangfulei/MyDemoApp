@@ -14,7 +14,9 @@ import java.util.List;
 public class BaseModel implements Serializable {
     private static final long serialVersionUID = 1L;
     private UserData user;
-    private String message;
+    private String successMessage;
+    private String systemFailureMessage;
+    private String errorMessage;
     private List<?> resultList;
 
 }

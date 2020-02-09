@@ -4,7 +4,6 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MaterialModule} from './shared/material.module';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FooterModule} from "./core/footer/footer.module";
@@ -17,18 +16,21 @@ import {TokenInterceptor} from "./shared/interceptor/tokenInterceptor";
 import {HomeModule} from "./home/home.module";
 import {PaymentComponent} from './payment/payment.component';
 import {CookieService} from "ngx-cookie-service";
-import { LoadingIndicatorComponent } from './core/loading-indicator/loading-indicator.component';
+import {LoadingIndicatorComponent} from './core/loading-indicator/loading-indicator.component';
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
     declarations: [
         AppComponent,
         PaymentComponent,
-        LoadingIndicatorComponent,
+        LoadingIndicatorComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
         FontAwesomeModule,
+        // shared components and material module
+        SharedModule,
         // AppRoutingModule,
         HomeModule,
         MenuModule,
@@ -37,7 +39,6 @@ import { LoadingIndicatorComponent } from './core/loading-indicator/loading-indi
         BrowserAnimationsModule,
         // imported here because dialog components are provided here
         ReactiveFormsModule,
-        MaterialModule,
         // imported for ng select
         NgSelectModule,
         FooterModule,

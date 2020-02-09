@@ -12,5 +12,4 @@ public class ValidationException extends RuntimeException {
     public String getMsg() {
         return msg;
     }
-
 }

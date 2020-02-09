@@ -14,7 +14,6 @@ import com.model.data.SignUpData;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -33,31 +32,26 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        User user = userRepository.findByEmail(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
-
+    public UserDetails loadUserByUsername(String username) throws ValidationException {
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new ValidationException("User not found: " + username));
         return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), new HashSet<>());
     }
 
     public void loginUser(BaseModel userModel) {
         User user = userRepository.findByEmail(userModel.getUser().getEmail())
-                .orElseThrow(() -> new ValidationException("User not found"));
-
+                .orElseThrow(() -> new ValidationException("User not found!"));
         modelMapper.map(user, userModel);
-        System.out.println("user has logged in");
     }
 
     public void signUpUser(SignUpModel signUpModel) {
         SignUpData signUpData = signUpModel.getSignUp();
         if (userRepository.existsByUsername(signUpData.getUsername())) {
-            signUpModel.setMessage("User Name already taken!");
-            return;
+            throw new ValidationException("User Name already taken!");
         }
 
         if (userRepository.existsByEmail(signUpData.getEmail())) {
-            signUpModel.setMessage("email is in use!");
-            return;
+            throw new ValidationException("Email is in use!");
         }
 
         // Create new user's account

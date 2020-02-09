@@ -1,0 +1,32 @@
+<div *ngIf="messages.showMessages" class="common-messages common-messages-container">
+    <div class="alert alert-success alert-no-padding" role="alert"
+         *ngIf="hasValidMessage(messages.success)" (click)="close('success')">
+        <div class="common-message" *ngFor="let msg of asArray(messages.success)">
+            <div class="common-message" [innerHtml]="msg.message"></div>
+        </div>
+    </div>
+    <div class="alert alert-info alert-no-padding" role="alert"
+         *ngIf="hasValidMessage(messages.info)" (click)="close('info')">
+        <div class="common-message" *ngFor="let msg of asArray(messages.info)">
+            <div class="common-message" [innerHtml]="msg.message"></div>
+        </div>
+    </div>
+    <div class="alert alert-warning alert-no-padding" role="alert"
+         *ngIf="hasValidMessage(messages.warning)" (click)="close('warning')">
+        <div class="common-message" *ngFor="let msg of asArray(messages.warning)">
+            <div class="common-message" [innerHtml]="msg.message"></div>
+        </div>
+    </div>
+    <div class="alert alert-danger alert-no-padding" role="alert"
+         *ngIf="hasValidMessage(messages.error)" (click)="close('error')">
+        <div class="common-message" *ngFor="let msg of asArray(messages.error)">
+            <div class="common-message" [innerHtml]="msg.message"></div>
+        </div>
+    </div>
+    <div class="alert alert-failure alert-no-padding" role="alert"
+         *ngIf="hasValidMessage(messages.systemFailure)" (click)="close('systemFailure')">
+        <div class="common-message" *ngFor="let msg of asArray(messages.systemFailure)">
+            <div class="common-message" [innerHtml]="msg.message"></div>
+        </div>
+    </div>
+</div>

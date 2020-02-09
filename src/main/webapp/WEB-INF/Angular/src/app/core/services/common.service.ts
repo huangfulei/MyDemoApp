@@ -5,8 +5,9 @@ import {APIUrlConstants} from "../../shared/constants/APIUrlConstants";
 import {AppInjector} from "./app-injector";
 import {BaseModel} from "../../shared/model/base-model";
 import {catchError, map} from "rxjs/operators";
-import {isNotNull, isNull} from "../../shared/utility/common.utility";
+import {isNotNull} from "../../shared/utility/common.utility";
 import {SharedConstants} from "../../shared/constants/SharedConstants";
+import {MessageService} from "../../shared/components/message/message.service";
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +15,7 @@ import {SharedConstants} from "../../shared/constants/SharedConstants";
 export class CommonService {
     private injector = AppInjector.getInjector();
     protected readonly http = this.injector.get(HttpClient);
+    protected readonly messageService = this.injector.get(MessageService);
     private apiEndpoint: string;
     private modelName: string;
 
@@ -43,9 +45,10 @@ export class CommonService {
         return this.http
             .post(overrideEndpoint, postModel, options).pipe(
                 map(response => {
-                    /*if (!this.messageService.processMessage(response)) {
-                        throw observableThrowError(response);
-                    }*/
+                    if (!this.messageService.processMessage(response)) {
+                        // throw observableThrowError(response);
+                        console.log(response);
+                    }
                     // TODO: do validation mapping.
                     return response;
                 }),
@@ -56,7 +59,7 @@ export class CommonService {
         const url = this.apiEndpoint + APIUrlConstants.HTTP_SEARCH;
 
         let baseModel = {};
-        if(isNotNull(model)){
+        if (isNotNull(model)) {
             baseModel = model;
         }
         return this.http.post(url, baseModel).pipe(

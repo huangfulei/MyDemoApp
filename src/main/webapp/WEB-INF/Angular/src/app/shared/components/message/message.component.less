@@ -1,0 +1,41 @@
+.common-messages-container {
+    cursor: pointer;
+    display: block;
+    position: fixed;
+    width: 100%;
+    z-index: 500;
+}
+
+#user-info-menu {
+    z-index: 10001;
+}
+
+.common-message {
+    position: relative;
+}
+
+.common-messages-close {
+    &:hover {
+        opacity: 1;
+    }
+
+    &:after {
+        content: "X";
+        font-weight: bold;
+    }
+}
+
+.alert-failure {
+    background-color: #FF8300;
+    background-image: -o-linear-gradient(top, #f2dede 0%, #e7c3c3 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f2dede), to(#e7c3c3));
+    background-image: -webkit-linear-gradient(top, #f2dede 0%, #e7c3c3 100%);
+    background-image: linear-gradient(to bottom, #f2dede 0%, #e7c3c3 100%);
+    background-repeat: repeat-x;
+    border-color: #dca7a7;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff8c00', endColorstr='#ff8c00', GradientType=0);
+}
+
+.alert-no-padding {
+    margin-bottom: 0px !important;
+}

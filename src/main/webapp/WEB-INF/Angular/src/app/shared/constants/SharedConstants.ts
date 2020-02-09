@@ -3,4 +3,8 @@ export class SharedConstants {
     public static JWT_REFRESH_TOKEN = 'jwt_refresh_token';
     public static USER = 'user';
     public static RESULT_LIST = 'resultList';
+    static SUCCESS_MESSAGE = 'successMessage';
+    static SYSTEM_FAILURE_MESSAGE = 'systemFailureMessage';
+    static ERROR_MESSAGE = 'errorMessage';
+    static MESSAGE_TIMEOUT_MILLISECONDS = 20000;
 }
