@@ -14,6 +14,5 @@ import java.util.Set;
 public class UserData extends BaseData {
     private String email;
     private String username;
-    private String password; // todo: may need to remove from here
     private Set<Role> roles = new HashSet<>();
 }

@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com</groupId>
-    <artifactId>Lift-WS</artifactId>
+    <artifactId>MyDemoApp</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
     <name>Sample Spring MVC Application Using AWS CodeStar</name>
@@ -110,7 +110,6 @@
             <artifactId>liquibase-core</artifactId>
             <version>3.8.5</version>
         </dependency>-->
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>

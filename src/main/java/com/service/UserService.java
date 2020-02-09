@@ -1,30 +1,35 @@
 package com.service;
 
 import com.configuration.security.model.UserDetailsImpl;
+import com.configuration.util.DataUtil;
+import com.dal.dao.RoleRepository;
 import com.dal.dao.UserRepository;
 import com.dal.entity.Role;
 import com.dal.entity.User;
+import com.exceptions.ValidationException;
+import com.model.AppConstants;
+import com.model.BaseModel;
+import com.model.SignUpModel;
+import com.model.data.SignUpData;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
     private final ModelMapper modelMapper;
+    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -32,6 +37,39 @@ public class UserService implements UserDetailsService {
 
         User user = userRepository.findByEmail(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
 
-        return new UserDetailsImpl(user.getId(),user.getUsername(),user.getEmail(), user.getPassword(), new HashSet<>());
+        return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), new HashSet<>());
+    }
+
+    public void loginUser(BaseModel userModel) {
+        User user = userRepository.findByEmail(userModel.getUser().getEmail())
+                .orElseThrow(() -> new ValidationException("User not found"));
+
+        modelMapper.map(user, userModel);
+        System.out.println("user has logged in");
+    }
+
+    public void signUpUser(SignUpModel signUpModel) {
+        SignUpData signUpData = signUpModel.getSignUp();
+        if (userRepository.existsByUsername(signUpData.getUsername())) {
+            signUpModel.setMessage("User Name already taken!");
+            return;
+        }
+
+        if (userRepository.existsByEmail(signUpData.getEmail())) {
+            signUpModel.setMessage("email is in use!");
+            return;
+        }
+
+        // Create new user's account
+        if (DataUtil.isNull(signUpData.getRequestRole())) {
+            Role userRole = roleRepository.findByName(AppConstants.CUSTOMER);
+            signUpData.getRoles().add(userRole);
+        } else if (AppConstants.ADMIN.equals(signUpData.getRequestRole())) {
+            Role adminRole = roleRepository.findByName(AppConstants.ADMIN);
+            signUpData.getRoles().add(adminRole);
+        }
+
+        User newUser = modelMapper.map(signUpData, User.class);
+        userRepository.save(newUser);
     }
 }

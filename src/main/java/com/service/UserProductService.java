@@ -4,8 +4,6 @@ import com.configuration.util.DataUtil;
 import com.dal.dao.UserProductRepository;
 import com.dal.entity.UserProduct;
 import com.model.ProductModel;
-import com.model.UserProductModel;
-import com.model.data.ProductData;
 import com.model.data.UserProductData;
 import org.springframework.stereotype.Service;
 

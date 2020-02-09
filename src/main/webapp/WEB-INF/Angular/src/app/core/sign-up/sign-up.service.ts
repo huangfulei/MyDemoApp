@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 
 @Injectable()
 export class SignUpService extends CommonService{
-  private readonly MODEL_NAME = 'user';
+  private readonly MODEL_NAME = 'signUp';
   private readonly SIGN_UP_ENDPOINT = APIUrlConstants.SIGN_UP;
 
   constructor() {
