@@ -64,7 +64,7 @@ export class MessageService {
         }
     }
 
-    private remove(id: string): any | undefined {
+    public remove(id: string): any | undefined {
         const info = Object.keys(this._messages.info);
         if (info.indexOf(id) > -1) {
             delete this._messages.info[id];
