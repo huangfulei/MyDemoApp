@@ -1,12 +1,11 @@
 package com.controller;
 
-import com.dal.entity.Product;
+import com.model.ProductModel;
 import com.service.ProductService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public class ProductController {
@@ -16,10 +15,10 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/products")
-    public List<Product> getProducts() {
-        List<Product> productList = productService.findAllProducts();
-        return productList;
+    @PostMapping("/products")
+    public ProductModel getProducts(@RequestBody ProductModel productModel) {
+        productService.findAllProducts(productModel);
+        return productModel;
     }
 
     @GetMapping("/product")

@@ -19,11 +19,9 @@ public class UserProductController {
     }
 
     @PostMapping("/addProductToCart")
-    public ProductModel addItemToCart(@RequestBody ProductModel product) {
-
-        userProductService.addProductToCart(product);
-
-        return null;
+    public ProductModel addItemToCart(@RequestBody ProductModel productModel) {
+        userProductService.addProductToCart(productModel);
+        return productModel;
     }
 
     @PostMapping("search")

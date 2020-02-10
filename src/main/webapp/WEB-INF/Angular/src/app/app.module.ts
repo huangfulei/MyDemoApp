@@ -60,9 +60,6 @@ import {SharedModule} from "./shared/shared.module";
         //
         // {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
     ],
-    entryComponents: [
-        // dialog windows
-    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

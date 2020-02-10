@@ -1,13 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {User} from "../../shared/model/user";
-import {ProductService} from "../../product/product.service";
-import {LoginService} from "../login/login.service";
-import {UserSessionService} from "../services/user-session.service";
 import {LogoutService} from "../services/logout.service";
 import {CookieService} from "ngx-cookie-service";
 import {SharedConstants} from "../../shared/constants/SharedConstants";
-import {HttpClient} from "@angular/common/http";
+import {GlobalData} from "../services/global-data";
 
 @Component({
     selector: 'app-menu',
@@ -16,34 +12,42 @@ import {HttpClient} from "@angular/common/http";
 })
 export class MenuComponent implements OnInit {
     public isLoggedIn: any = false;
-    public itemsInCart: string;
-    private user: User;
+    public totalNumberOfProducts: number;
 
     constructor(private route: Router,
-                private userSessionService: UserSessionService,
-                private loginService: LoginService,
+                private readonly globalData: GlobalData,
                 private logoutService: LogoutService,
-                private productService: ProductService,
-                private cookieService: CookieService,
-                private http: HttpClient) {
+                private cookieService: CookieService) {
     }
 
     ngOnInit() {
 
-        if (this.cookieService.get(SharedConstants.JWT_TOKEN)) {
-            console.log('jwt is here');
+        console.log(this.cookieService.get(SharedConstants.LOGIN_STATUS));
+        // when load the app check cookies for user
+        if (this.cookieService.get(SharedConstants.LOGIN_STATUS) == 'true') {
+            console.log('login true');
             this.isLoggedIn = true;
+            this.totalNumberOfProducts = +this.cookieService.get(SharedConstants.TOTAL_NUMBER_OF_PRODUCTS)
         }
+        console.log(this.globalData.getUser());
 
-        this.userSessionService.getLoginStatus().subscribe(response => {
+        // when browser stays, and user logged out and login again
+        this.globalData.getLoginStatus().subscribe(response => {
             console.log(response);
             this.isLoggedIn = response;
+            if (this.isLoggedIn) {
+                this.cookieService.set(SharedConstants.LOGIN_STATUS, 'true');
+                console.log(this.globalData.getUser());
+                this.totalNumberOfProducts = this.globalData.getUser().totalNumberOfProducts;
+            }
         });
-        this.productService.updatedProduct.subscribe(product => {
-            console.log(product);
-            this.itemsInCart = String(product.totalNumber);
 
+        this.globalData.getTotalNumberOfProducts().subscribe(data => {
+            this.totalNumberOfProducts = data;
+            this.cookieService.set(SharedConstants.TOTAL_NUMBER_OF_PRODUCTS, String(data));
         })
+
+
     }
 
     public onLogOut() {
@@ -52,24 +56,4 @@ export class MenuComponent implements OnInit {
         this.logoutService.sendUserToLogout();
     }
 
-    test() {
-        /*let headers =
-            {
-                'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
-                'Authorization': 'Basic ' + btoa('Fulei:fulei-secret')
-            };
-
-        const body = new HttpParams()
-            .set('client_id', 'Fulei')
-            .set('grant_type', 'refresh_token')
-            .set('refresh_token', this.cookieService.get(SharedConstants.JWT_REFRESH_TOKEN));
-
-        console.log(this.cookieService.get(SharedConstants.JWT_REFRESH_TOKEN));
-        this.http.post(APIUrlConstants.OAUTH_TOKEN, body, {headers})
-            .subscribe((token:Oauth2Response)=>{
-                console.log(token);
-                this.cookieService.set(SharedConstants.JWT_TOKEN, token.access_token);
-                this.cookieService.set(SharedConstants.JWT_REFRESH_TOKEN, token.access_token);
-            });*/
-    }
 }

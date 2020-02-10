@@ -109,7 +109,7 @@ export class MessageService {
         return this.add('error', message);
     }
 
-    private systemFailure(message: string) {
+    public systemFailure(message: string) {
         return this.add('systemFailure', message);
     }
 

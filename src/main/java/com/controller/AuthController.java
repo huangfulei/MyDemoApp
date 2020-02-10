@@ -1,6 +1,6 @@
 package com.controller;
 
-import com.model.BaseModel;
+import com.model.LoginModel;
 import com.model.SignUpModel;
 import com.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,9 +31,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public BaseModel signIn(@RequestBody BaseModel userModel) {
-        userService.loginUser(userModel);
-        return userModel;
+    public LoginModel signIn(@RequestBody LoginModel loginModel) {
+         userService.loginUser(loginModel);
+         return loginModel;
     }
 
     @PostMapping("/signup")

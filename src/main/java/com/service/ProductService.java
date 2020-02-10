@@ -1,19 +1,17 @@
 package com.service;
 
 import com.dal.dao.ProductRepository;
-import com.dal.entity.Product;
+import com.model.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class ProductService {
+public class ProductService extends BaseService {
 
-    @Autowired private ProductRepository productRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
-    public List<Product> findAllProducts(){
-
-        return productRepository.findAll();
+    public void findAllProducts(ProductModel productModel) {
+        setResultList(productRepository.findAll(), productModel);
     }
 }

@@ -7,4 +7,6 @@ export class SharedConstants {
     static SYSTEM_FAILURE_MESSAGE = 'systemFailureMessage';
     static ERROR_MESSAGE = 'errorMessage';
     static MESSAGE_TIMEOUT_MILLISECONDS = 20000;
+    static TOTAL_NUMBER_OF_PRODUCTS = 'totalNumberOfProducts';
+    static LOGIN_STATUS = 'loginStatus';
 }

@@ -9,7 +9,7 @@
             <fa-icon [icon]="['fas', 'bars']"></fa-icon>
         </label>
         <div class="menu">
-            <button mat-button routerLink="/home" (click)="test()">home</button>
+            <button mat-button routerLink="/home">home</button>
             <button mat-button routerLink="/products">products</button>
             <button mat-button
                     routerLink="/login"
@@ -31,7 +31,7 @@
                             routerLink="/cart">
                     </fa-icon>
                 </button>-->
-            <button mat-icon-button [matBadge]="itemsInCart"
+            <button mat-icon-button [matBadge]="totalNumberOfProducts"
                     matBadgeColor="warn"
                     routerLink="/cart"
                     *ngIf="isLoggedIn">

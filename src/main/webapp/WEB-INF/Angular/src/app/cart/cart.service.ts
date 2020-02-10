@@ -8,7 +8,6 @@ import {Observable} from "rxjs";
     providedIn: 'root'
 })
 export class CartService extends CommonService {
-
     private readonly MODEL_NAME = 'product';
     private readonly CART_ENDPOINT = APIUrlConstants.CART;
     private readonly ADD_TO_CART_ENDPOINT = this.CART_ENDPOINT + APIUrlConstants.ADD_TO_CART;
@@ -20,6 +19,6 @@ export class CartService extends CommonService {
     }
 
     public addItemToCart(product: Product): Observable<any> {
-        return this.simplePost(this.MODEL_NAME, product, this.ADD_TO_CART_ENDPOINT);
+        return this.simplePost(this.ADD_TO_CART_ENDPOINT, product, this.MODEL_NAME);
     }
 }

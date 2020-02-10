@@ -28,13 +28,14 @@ public class UserProduct {
 
     private int quantity;
 
-    @Transient
+/*    @Transient
     public Product getProduct() {
         return this.product;
-    }
+    }*/
 
     @Transient
     public Integer getTotalPrice() {
         return getProduct().getPrice() * this.quantity;
     }
+
 }

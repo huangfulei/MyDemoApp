@@ -1,46 +1,30 @@
-import {Injectable} from '@angular/core';
-import {isNotEmptyArray, isNotNull, isNull} from "../../shared/utility/common.utility";
+import {Injectable} from "@angular/core";
 import {SharedConstants} from "../../shared/constants/SharedConstants";
-import {Permission} from "../../shared/model/permission";
-import {Observable, Subject} from "rxjs";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {HttpParams} from "@angular/common/http";
 import {APIUrlConstants} from "../../shared/constants/APIUrlConstants";
 import {CookieService} from "ngx-cookie-service";
+import {CommonService} from "./common.service";
+import {isNotEmptyArray, isNotNull, isNull} from "../../shared/utility/common.utility";
+import {Permission} from "../../shared/model/permission";
+import {GlobalData} from "./global-data";
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserSessionService {
-    private readonly LOG_IN_ENDPOINT = APIUrlConstants.LOG_IN;
+export class UserSessionService extends CommonService {
     private readonly OAUTH_TOKEN_ENDPOINT = APIUrlConstants.OAUTH_TOKEN;
-    private userSession: any = null;
-    private loginStatus = new Subject<boolean>();
-    // public currentUser: Observable<User>;
-    // private currentUserSubject: BehaviorSubject<User>;
+    headers = {
+        'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
+        'Authorization': 'Basic ' + btoa('Fulei:fulei-secret')
+    };
 
-    constructor(private readonly http: HttpClient,
-                private readonly cookieService: CookieService) {
-        // this.currentUserSubject = new BehaviorSubject<User>(this.cookieService.get(SharedConstants.JWT_TOKEN)));
-        // this.currentUser = this.currentUserSubject.asObservable();
+    constructor(private readonly cookieService: CookieService,
+                private readonly globalData: GlobalData) {
+        super();
     }
 
-    public setLoginStatus(status: boolean) {
-        this.loginStatus.next(status);
-    }
-
-    public getLoginStatus(): Observable<boolean> {
-        return this.loginStatus;
-    }
-
-    public getUser() {
-        return this.userSession;
-    }
-
-    public getUserSession(user: { user: { email: string, password: string } }): Promise<any> {
-        // Fetch User session from the common controller
-        return this.http.post(this.LOG_IN_ENDPOINT, user).toPromise();
-    }
-
+    // todo: use it
     public getPermissionByBusinessObject(businessObjectName: string): Permission | undefined {
         const permissionList: any = this.getUserPermissionList();
         let foundPermission: Permission = new Permission(); // All permissions will default to false.
@@ -61,32 +45,29 @@ export class UserSessionService {
         return foundPermission;
     }
 
+    // todo: use it
     private getUserPermissionList(): Observable<any> {
-        if (isNotNull(this.userSession)) {
-            return this.userSession.permissionList;
+        if (isNotNull(this.globalData.getUser())) {
+            return this.globalData.getUser().permissionList;
         }
     }
 
-    public setUserSession(userSession) {
-        this.userSession = userSession;
-    }
+    public getAccessToken(user: { email: string, password: string }): Observable<any> {
+        // let options = { headers: headers };
+        const body = new HttpParams()
+            .set('username', user.email)
+            .set('password', user.password)
+            .set('grant_type', 'password');
 
-    public logout() {
-
+        return this.simplePost(this.OAUTH_TOKEN_ENDPOINT, body, null, {headers: this.headers});
     }
 
     public refreshToken(): Observable<any> {
-        let headers =
-            {
-                'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
-                'Authorization': 'Basic ' + btoa('Fulei:fulei-secret')
-            };
-
         const body = new HttpParams()
             .set('client_id', 'Fulei')
             .set('grant_type', 'refresh_token')
             .set('refresh_token', this.cookieService.get(SharedConstants.JWT_REFRESH_TOKEN));
 
-        return this.http.post<any>(this.OAUTH_TOKEN_ENDPOINT, body, {headers});
+        return this.simplePost(this.OAUTH_TOKEN_ENDPOINT, body, null, {headers: this.headers});
     }
 }

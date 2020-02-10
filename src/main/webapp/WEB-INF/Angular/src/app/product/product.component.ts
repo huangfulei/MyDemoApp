@@ -3,9 +3,10 @@ import {ProductService} from "./product.service";
 import {Product} from "./product";
 import {MatDialog} from "@angular/material/dialog";
 import {LogInReminderComponent} from "../shared/pop-up/log-in-reminder/log-in-reminder.component";
-import {UserSessionService} from "../core/services/user-session.service";
-import {isEmptyObject, isNotNull, isNull} from "../shared/utility/common.utility";
 import {CartService} from "../cart/cart.service";
+import {GlobalData} from "../core/services/global-data";
+import {CookieService} from "ngx-cookie-service";
+import {SharedConstants} from "../shared/constants/SharedConstants";
 
 @Component({
     selector: 'app-product',
@@ -38,7 +39,8 @@ export class ProductComponent implements OnInit {
 
     constructor(private readonly productService: ProductService,
                 private readonly cartService: CartService,
-                private readonly userSessionService: UserSessionService,
+                private readonly globalData: GlobalData,
+                private readonly cookieService: CookieService,
                 private dialog: MatDialog) {
     }
 
@@ -50,50 +52,47 @@ export class ProductComponent implements OnInit {
         sourceImg.src = targetImage.src;
     }
 
-/*    /!**
-     * Respond to the transition event of the button text
-     * by setting the text awaiting transition then setting the state as shown
-     *!/
-    public buttonTextTransitioned() {
-        this.buttonText = this.transitionButtonText;
-        this.buttonTextState = this.buttonTextState = 'shown';
-    }*/
+    /*    /!**
+         * Respond to the transition event of the button text
+         * by setting the text awaiting transition then setting the state as shown
+         *!/
+        public buttonTextTransitioned() {
+            this.buttonText = this.transitionButtonText;
+            this.buttonTextState = this.buttonTextState = 'shown';
+        }*/
 
     public onAddToCart(product: Product) {
 
-        if (isNull(this.userSessionService.getUser())) {
+        if (this.cookieService.get(SharedConstants.LOGIN_STATUS) !== 'true') {
             this.openLoginReminder();
         } else {
-
             console.log(product);
-            this.cartService.addItemToCart(product).subscribe((response)=>{
-                console.log(response);
+            this.cartService.addItemToCart(product).subscribe((response) => {
+                const totalNumberOfProducts = this.cookieService.get(SharedConstants.TOTAL_NUMBER_OF_PRODUCTS);
+                this.globalData.setTotalNumberOfProducts(+totalNumberOfProducts + 1);
             });
 
             // todo: text transition
-/*            // Kick off the first transition
-            this.buttonTextState = 'transitioning';
-            this.transitionButtonText = 'ADDED';
+            /*            // Kick off the first transition
+                        this.buttonTextState = 'transitioning';
+                        this.transitionButtonText = 'ADDED';
 
-            // Do whatever logic here. If it is asynchronous, put the remaining code in your subscribe/then callbacks
-            //this.productService.addItemToCart(product);
+                        // Do whatever logic here. If it is asynchronous, put the remaining code in your subscribe/then callbacks
+                        //this.productService.addItemToCart(product);
 
-            // Note if your logic is snappy, you could leave the timeouts in to simulate the animation for a better UX
-            setTimeout(() => {
-                this.buttonTextState = 'transitioning';
-                this.transitionButtonText = 'ADD TO CART';
-            }, 1500);*/
+                        // Note if your logic is snappy, you could leave the timeouts in to simulate the animation for a better UX
+                        setTimeout(() => {
+                            this.buttonTextState = 'transitioning';
+                            this.transitionButtonText = 'ADD TO CART';
+                        }, 1500);*/
         }
     }
 
     private loadProducts() {
         this.productService.getProducts().subscribe(data => {
-                console.log(data);
-                this.products = data;
-            },
-            (error => {
-                console.log(error);
-            }));
+            console.log(data);
+            this.products = data.resultList;
+        })
     }
 
     private openLoginReminder() {
@@ -102,8 +101,4 @@ export class ProductComponent implements OnInit {
             height: '200px',
         });
     }
-
-    /*    public trackBy(index, item){
-            console.log(index, item);
-        }*/
 }

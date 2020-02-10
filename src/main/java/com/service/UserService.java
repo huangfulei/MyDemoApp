@@ -6,12 +6,13 @@ import com.dal.dao.RoleRepository;
 import com.dal.dao.UserRepository;
 import com.dal.entity.Role;
 import com.dal.entity.User;
+import com.dal.entity.UserProduct;
 import com.exceptions.ValidationException;
 import com.model.AppConstants;
-import com.model.BaseModel;
+import com.model.LoginModel;
 import com.model.SignUpModel;
+import com.model.data.LoginData;
 import com.model.data.SignUpData;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -19,15 +20,13 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService extends BaseService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
     private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
         this.roleRepository = roleRepository;
     }
 
@@ -38,10 +37,13 @@ public class UserService implements UserDetailsService {
         return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), new HashSet<>());
     }
 
-    public void loginUser(BaseModel userModel) {
-        User user = userRepository.findByEmail(userModel.getUser().getEmail())
+    public void loginUser(LoginModel loginModel) {
+        User user = userRepository.findByEmail(loginModel.getLogin().getEmail())
                 .orElseThrow(() -> new ValidationException("User not found!"));
-        modelMapper.map(user, userModel);
+        map(user, loginModel.getLogin());
+        int totalNumberOfProducts = user.getUserProducts().stream().mapToInt(UserProduct::getQuantity).sum();
+        loginModel.getLogin().setTotalNumberOfProducts(totalNumberOfProducts);
+        loginModel.setSuccessMessage("Enjoy your day!");
     }
 
     public void signUpUser(SignUpModel signUpModel) {
@@ -63,7 +65,8 @@ public class UserService implements UserDetailsService {
             signUpData.getRoles().add(adminRole);
         }
 
-        User newUser = modelMapper.map(signUpData, User.class);
+        User newUser = map(signUpData, User.class);
         userRepository.save(newUser);
+        signUpModel.setSuccessMessage("Sign up successful!");
     }
 }

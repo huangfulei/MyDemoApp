@@ -12,7 +12,7 @@ export class UserTypeService {
   }
 
   public setUserTypeToUser() {
-    if (isNotNull(this.globalData.user)) {
+    if (isNotNull(this.globalData.getUser())) {
       // this.globalData.user.isInternal = this.isUserGMInternal();
       // this.globalData.user.isSupplier = this.isUserSupplier();
       // this.globalData.user.isJointVenture = this.isUserJointVenture();

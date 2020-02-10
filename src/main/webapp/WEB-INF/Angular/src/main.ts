@@ -9,7 +9,6 @@ if (environment.production) {
     enableProdMode();
 }
 
-localStorage.clear();
 platformBrowserDynamic().bootstrapModule(AppModule).then((moduleRef) => {
     AppInjector.setInjector(moduleRef.injector);
 }).catch(err => console.error(err));

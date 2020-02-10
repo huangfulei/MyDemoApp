@@ -6,7 +6,6 @@ import {faBars, faShoppingCart, faTimes} from "@fortawesome/free-solid-svg-icons
 import {RouterModule} from "@angular/router";
 import {MatMenuModule} from "@angular/material/menu";
 import {MaterialModule} from "../../shared/material.module";
-import {ProductService} from "../../product/product.service";
 
 @NgModule({
     declarations: [MenuComponent],
