@@ -21,6 +21,10 @@ public class LiftApplication extends SpringBootServletInitializer {
         System.out.println("Running............");
     }
 
+    public void addViewController(){
+
+    }
+
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();

@@ -10,7 +10,9 @@ import {BaseModel} from "../shared/model/base-model";
 })
 export class CartComponent implements OnInit {
 
-    public products: Product[];
+    displayedColumns: string[] = ['Name', 'Description', 'Price'];
+    public dataSource: Product[];
+    // dataSource = ELEMENT_DATA;
 
     constructor(private readonly cartService: CartService) {
     }
@@ -22,7 +24,7 @@ export class CartComponent implements OnInit {
     private loadCartData() {
         this.cartService.search().subscribe((response: BaseModel) => {
             console.log(response);
-            this.products = response.resultList;
+            this.dataSource = response.resultList;
         })
     }
 }
