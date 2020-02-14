@@ -1,4 +1,4 @@
-<form class="container" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+<!--<form class="container" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <div class="container">
         <h1>Sign up</h1>
         <div *ngIf="error" class="alert alert-danger">
@@ -81,4 +81,76 @@
             <a routerLink="/login" class="btn btn-link">Log in</a>
         </div>
     </div>
+</form>-->
+
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div class="segment">
+        <h1>Log In</h1>
+    </div>
+    <div *ngIf="error" class="alert alert-danger">
+        {{error}}
+    </div>
+    <label>
+        <input type="text"
+               placeholder="Username"
+               formControlName="username"
+        />
+    </label>
+    <label>
+        <input type="text"
+               placeholder="Email Address"
+               formControlName="email"/>
+    </label>
+    <label>
+        <input type="password"
+               placeholder="Password"
+               formControlName="password"/>
+    </label>
+    <div *ngIf="password.invalid && (password.dirty || password.touched)"
+         class="alert alert-danger">
+
+        <div *ngIf="password.errors.required">
+            Password is required.
+        </div>
+        <div *ngIf="password.errors.minlength">
+            Password must be at least 6 characters long.
+        </div>
+        <div *ngIf="password.errors.noUppercase">
+            Password must contain at least 1 uppercase letter.
+        </div>
+        <div *ngIf="password.errors.boLowercase">
+            Password must contain at least 1 lowercase letter.
+        </div>
+        <div *ngIf="password.errors.noNumber">
+            Password must contain at least 1 number.
+        </div>
+        <div *ngIf="password.errors.noSpecialChar">
+            Password must contain at least 1 special character.
+        </div>
+    </div>
+    <label>
+        <input type="password"
+               placeholder="Password"
+               formControlName="confirmPass"
+        />
+    </label>
+    <div *ngIf="confirmPass.invalid && (confirmPass.dirty || confirmPass.touched)"
+         class="alert alert-danger">
+
+        <div *ngIf="confirmPass.errors.required">
+            Confirm password is required.
+        </div>
+        <div *ngIf="confirmPass.errors.notMatch">
+            Password need to be the same.
+        </div>
+    </div>
+    <button class="red" type="submit" [disabled]="signupForm.invalid">
+        <fa-icon [icon]="['fas', 'lock']"></fa-icon> Sign Up</button>
+    <!--    <div class="input-group">
+            <label>
+                <input type="text" placeholder="Email Address"/>
+            </label>
+            <button class="unit" type="button"><i class="icon ion-md-search"></i></button>
+        </div>-->
 </form>
+

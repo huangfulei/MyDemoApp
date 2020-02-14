@@ -1,4 +1,4 @@
-<div class="wrapper">
+<!--<div class="wrapper">
     <mat-card *ngFor="let product of products; let i = index" class="card">
         <div class="top-section">
             <img #img id="image-container" src="../../assets/images/1.png" alt="">
@@ -13,11 +13,24 @@
         <div class="product-info">
             <div class="name">{{product.name}}</div>
             <div class="dis">{{product.description}}</div>
-           <!-- <a #btn class="btn" [@buttonTextStateTrigger]="buttonTextState"
+           &lt;!&ndash; <a #btn class="btn" [@buttonTextStateTrigger]="buttonTextState"
                (@buttonTextStateTrigger.done)="buttonTextTransitioned(btn)"
-               (click)="onAddToCart(product,btn)">ADD TO CART</a>-->
+               (click)="onAddToCart(product,btn)">ADD TO CART</a>&ndash;&gt;
             <button mat-button class="btn" (click)="onAddToCart(product)">{{buttonText}}</button>
         </div>
     </mat-card>
 
+</div>-->
+
+<div class="fullwidth">
+    <div class="gallery">
+        <figure class="item" *ngFor="let product of products; let i = index">
+            <div class="img-wrap"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/46992/cl-01.png" alt="" /></div>
+            <figcaption class="caption">
+                <h3>{{product.name}}<br/>{{product.description}}</h3>
+                <div class="btn-buy button" (click)="onAddToCart(product)">ADD TO CART</div>
+                <button class="btn-details" href="#">See details</button>
+            </figcaption>
+        </figure>
+    </div>
 </div>

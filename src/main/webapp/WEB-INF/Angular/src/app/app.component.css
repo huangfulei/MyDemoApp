@@ -6,13 +6,5 @@
 .body {
   /*display: flex;*/
   /*justify-content: space-around;*/
-  padding-bottom: 50px;
-}
-
-.wanted {
-  /*width: 50%;*/
-}
-
-.journey {
-  /*width: 50%;*/
+  /*background-color: #1abc9c;*/
 }

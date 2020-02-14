@@ -6,6 +6,7 @@ import {SignUpComponent} from "./sign-up.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "../../shared/material.module";
 import {SignUpService} from "./sign-up.service";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {SignUpService} from "./sign-up.service";
         CommonModule,
         ReactiveFormsModule,
         MaterialModule,
-        SignUpRoutingModule
+        SignUpRoutingModule,
+        FontAwesomeModule
     ],
     providers: [SignUpService]
 })
