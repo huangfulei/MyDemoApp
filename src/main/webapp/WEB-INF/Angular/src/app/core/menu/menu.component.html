@@ -40,13 +40,13 @@
             <label for="chk" class="hide-menu-btn">
                 <fa-icon [icon]="['fas','times']"></fa-icon>
             </label>
-            <fa-icon [icon]="['fas','bars']"
+           <!-- <fa-icon [icon]="['fas','bars']"
                     *ngIf="isLoggedIn"
                     [matMenuTriggerFor]="menu"
                     fxHide.gt-sm="false"
                     fxShow="true">
-            </fa-icon>
-            <mat-menu #menu="matMenu">
+            </fa-icon>-->
+            <!--<mat-menu #menu="matMenu">
                 <div *ngIf="!isLoggedIn">
                     <button mat-menu-item routerLink="/user/login">log in</button>
                     <button mat-menu-item routerLink="/user/sign_up">sign up</button>
@@ -57,7 +57,7 @@
                     <button mat-menu-item routerLink="/user/tutorial">My Tutorial</button>
                     <button mat-menu-item routerLink="/user/saved">Saved</button>
                 </div>
-            </mat-menu>
+            </mat-menu>-->
         </div>
         <!-- <button class="user-image-button" *ngIf="isLoggedIn" [matMenuTriggerFor]="menu" fxHide.gt-sm="false" fxShow="true">
          </button>-->
