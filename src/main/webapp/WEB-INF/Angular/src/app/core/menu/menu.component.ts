@@ -42,6 +42,7 @@ export class MenuComponent implements OnInit {
             }
         });
 
+        // whenever update the total value set to cookies
         this.globalData.getTotalNumberOfProducts().subscribe(data => {
             this.totalNumberOfProducts = data;
             this.cookieService.set(SharedConstants.TOTAL_NUMBER_OF_PRODUCTS, String(data));
