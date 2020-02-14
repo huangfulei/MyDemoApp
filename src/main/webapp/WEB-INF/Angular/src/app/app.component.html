@@ -4,11 +4,14 @@
     <app-wanted class="wanted col-xs-12 col-md-6"></app-wanted>
     <app-journey class="journey col-xs-12 col-md-6"></app-journey>
   </div>-->
-<div class="body">
-    <app-menu class="sticky-top"></app-menu>
+<div class="main-container">
+    <app-menu class="menu"></app-menu>
     <app-messages></app-messages>
-    <router-outlet></router-outlet>
+    <div class="main">
+        <router-outlet></router-outlet>
+    </div>
     <app-loading-indicator></app-loading-indicator>
+    <div class="footer"></div>
 </div>
 
 <!--  <app-footer></app-footer>-->

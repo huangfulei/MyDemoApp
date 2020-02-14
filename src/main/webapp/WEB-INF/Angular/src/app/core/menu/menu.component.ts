@@ -5,6 +5,8 @@ import {CookieService} from "ngx-cookie-service";
 import {SharedConstants} from "../../shared/constants/SharedConstants";
 import {GlobalData} from "../services/global-data";
 
+declare var $: any;
+
 @Component({
     selector: 'app-menu',
     templateUrl: './menu.component.html',
@@ -21,6 +23,43 @@ export class MenuComponent implements OnInit {
     }
 
     ngOnInit() {
+        $(() => {
+
+            //On Scroll Functionality
+            $(window).scroll(() => {
+                var windowTop = $(window).scrollTop();
+                windowTop > 100 ? $('nav').addClass('navShadow') : $('nav').removeClass('navShadow');
+                windowTop > 100 ? $('ul').css('top', '100px') : $('ul').css('top', '160px');
+            });
+
+            //Click Logo To Scroll To Top
+            $('#logo').on('click', () => {
+                $('html,body').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            //Smooth Scrolling Using Navigation Menu
+            $('a[href*="#"]').on('click', function (e) {
+                $('html,body').animate({
+                    scrollTop: $($(this).attr('href')).offset().top - 100
+                }, 500);
+                e.preventDefault();
+            });
+
+            //Toggle Menu
+            $('#menu-toggle').on('click', () => {
+                $('#menu-toggle').toggleClass('closeMenu');
+                $('ul').toggleClass('showMenu');
+
+                $('li').on('click', () => {
+                    $('ul').removeClass('showMenu');
+                    $('#menu-toggle').removeClass('closeMenu');
+                });
+            });
+
+        });
+
 
         console.log(this.cookieService.get(SharedConstants.LOGIN_STATUS));
         // when load the app check cookies for user
