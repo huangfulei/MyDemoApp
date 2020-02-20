@@ -1,8 +1,8 @@
 import {Product} from "../product/product";
 
-export class Cart {
+export class UserProducts {
     id: number;
     product: Product;
     quantity: number;
-    price: number;
+    totalPrice: number;
 }

@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CartService} from "./cart.service";
 import {BaseModel} from "../shared/model/base-model";
-import {Cart} from "./cart";
-import {GlobalData} from "../core/services/global-data";
+import {UserProducts} from "./user-products";
 import {CookieService} from "ngx-cookie-service";
 import {SharedConstants} from "../shared/constants/SharedConstants";
 
@@ -14,7 +13,7 @@ import {SharedConstants} from "../shared/constants/SharedConstants";
 export class CartComponent implements OnInit {
 
     displayedColumns: string[] = ['Name', 'Description', 'Price'];
-    public products: Cart[];
+    public userProducts: UserProducts[];
     public totalNumberOfProducts;
 
     // dataSource = ELEMENT_DATA;
@@ -32,7 +31,7 @@ export class CartComponent implements OnInit {
     private loadCartData() {
         this.cartService.search().subscribe((response: BaseModel) => {
             console.log(response);
-            this.products = response.resultList;
+            this.userProducts = response.resultList;
         })
     }
 }

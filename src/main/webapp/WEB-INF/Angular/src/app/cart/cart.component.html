@@ -32,11 +32,12 @@
 </table>
 <div class="button"><span>Click Me</span></div>-->
 
-<body id=cart>
+<!--<body id=cart>
 <main>
 
     <section class="summary">
-        <div class="items">🛒 {{totalNumberOfProducts}} items</div>
+        <div class="items">🛒
+         items</div>
         <div class="total">$415.00 💲</div>
     </section>
 
@@ -61,4 +62,27 @@
         ❓ Need Help
     </section>
 </main>
-</body>
+</body>-->
+
+<div class="container">
+    <table class="neumorphic">
+        <thead>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let userProduct of userProducts">
+            <td>{{userProduct.product.name}}</td>
+            <td>{{userProduct.quantity}}</td>
+            <td>{{userProduct.totalPrice}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="bar">
+        <h3>Total price: 500€</h3>
+        <button class="btn" [routerLink]="['/pay']">Check Out</button>
+    </div>
+</div>

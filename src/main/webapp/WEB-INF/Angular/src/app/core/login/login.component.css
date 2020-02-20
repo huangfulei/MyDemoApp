@@ -84,10 +84,18 @@ button.unit {
 button.unit .icon {
     margin-right: 0;
 }
-button.red {
+
+button.login {
     display: block;
     width: 100%;
     color: #AE1100;
+}
+
+button.signUp {
+    margin-top: 24px;
+    display: block;
+    width: 100%;
+    color: limegreen;
 }
 
 .input-group {

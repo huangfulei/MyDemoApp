@@ -1,4 +1,5 @@
-/** grid **/
+/*
+!** grid **!
 body, main {
     display: grid;
     grid-gap: 1rem;
@@ -34,7 +35,7 @@ main {
     grid-area: help;
 }
 
-/** styling **/
+!** styling **!
 @media (min-width: 50rem) {
     body, main {
         max-width: 60rem;
@@ -159,4 +160,96 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0;
+}
+*/
+
+/*
+body {
+    margin: 0;
+    background: #e0e5ec;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 100;
+}
+*/
+
+.container {
+}
+
+table.neumorphic{
+    background-color: #dfdfdf;
+    width: 100%;
+    border-spacing: 0;
+    border-radius: 10px;
+    color: #212121;
+    text-align: center;
+    overflow: hidden;
+    box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6),
+    -9px -9px 16px rgba(255, 255, 255, 0.6);
+}
+table.neumorphic thead{
+    box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6);
+}
+table.neumorphic th{
+    padding: 7px;
+}
+
+table.neumorphic>tbody>tr>td {
+    padding: 10px;
+    font-size: 14px;
+    position: relative;
+}
+
+
+table.neumorphic>tbody>tr:hover {
+    padding: 20px;
+    box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6),
+    -9px -9px 16px rgba(255, 255, 255, 0.6);
+}
+
+table.neumorphic tr td:first-child::before {
+    content: "";
+    position: absolute;
+    padding: 7px;
+    top: 0;
+    left: -5000px;
+    width: 10000px;
+    height: 100%;
+    z-index: -10;
+}
+
+table.neumorphic td:hover::after {
+    content: "";
+    position: absolute;
+    box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6),
+    -9px -9px 16px rgba(255, 255, 255, 0.6);
+    left: 0;
+    top: -5000px;
+    height: 10000px;
+    width: 100%;
+    z-index: -1;
+}
+
+.bar {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10px 0px;
+    border-radius: 0.75rem;
+    background: #dfdfdf;
+    box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6),
+    -9px -9px 16px rgba(255, 255, 255, 0.6);
+}
+
+.btn {
+    color: var(--purple);
+    text-transform: uppercase;
+    border-radius: 0.75rem;
+    background: #dfdfdf;
+    box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6),
+    -9px -9px 16px rgba(255, 255, 255, 0.6);
+}
+
+.btn:focus{
+    outline: none;
+    transform: scale(0.95);
+    box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1), -4px -4px 10px white, 4px 4px 10px 0 rgba(0, 0, 0, 0.1) inset, -4px -4px 10px white inset;
 }

@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="loginForm">
     <div class="segment">
         <h1>Log In</h1>
     </div>
@@ -15,7 +15,8 @@
                placeholder="Password"
                formControlName="password"/>
     </label>
-    <button class="red" type="submit"><fa-icon [icon]="['fas', 'lock']"></fa-icon> Log in</button>
+    <button class="login" (click)="onSubmit()"><fa-icon [icon]="['fas', 'lock']"></fa-icon> Log in</button>
+    <button class="signUp" [routerLink]="['/sign_up']">Sign Up</button>
     <div class="segment">
         <button class="unit" type="button"><i class="icon ion-md-bookmark"></i></button>
         <button class="unit" type="button"><i class="icon ion-md-bookmark"></i></button>
