@@ -22,7 +22,7 @@
 
 </div>-->
 
-<div class="fullwidth">
+<!--<div class="fullwidth">
     <div class="gallery">
         <figure class="item" *ngFor="let product of products; let i = index">
             <div class="img-wrap"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/46992/cl-01.png" alt="" /></div>
@@ -33,4 +33,22 @@
             </figcaption>
         </figure>
     </div>
+</div>-->
+
+<div class="layout">
+    <div *ngFor="let product of products; let i = index">
+        <div class="card--neumorphic">
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/46992/cl-01.png" alt="" />
+            <div class="name-and-price">
+                <h2>{{product.name}}</h2>
+                <div class="price">
+                    {{product.price}}€
+                </div>
+            </div>
+            <p>{{product.description}}</p>
+            <button class="add-to-cart" (click)="onAddToCart(product)">Add To Cart</button>
+        </div>
+    </div>
 </div>
+
+

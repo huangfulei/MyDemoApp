@@ -67,39 +67,13 @@
 </div>
 -->
 
+<div class="nav">
+    <li class="logo">Fly</li>
+    <li tabindex="0" routerLink="/home">Home</li>
+    <li tabindex="0" routerLink="/products">Products</li>
+    <li tabindex="0" routerLink="/cart" *ngIf="isLoggedIn">Cart</li>
+    <li tabindex="0" routerLink="/login" *ngIf="!isLoggedIn">Log In</li>
+    <li tabindex="0"  *ngIf="isLoggedIn" (click)="onLogOut()">Log Out</li>
+</div>
 
-<header>
-    <nav>
-        <div id="brand">
-            <div id="logo">Home Logo</div>
-            <div id="word-mark">Hello</div>
-        </div>
-        <div id="menu">
-            <div id="menu-toggle">
-                <div id="menu-icon">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
-            </div>
-            <ul>
-                <li><a routerLink="/home">Home</a>
-                </li>
-                <li><a routerLink="/products">Product</a>
-                </li>
-                <li><a routerLink="/login"
-                        *ngIf="!isLoggedIn">Log In</a>
-                </li>
-                <li>
-                    <a routerLink="/sign_up"
-                            *ngIf="!isLoggedIn">Sign Up
-                    </a>
-                </li>
-                <li><a routerLink="/cart"
-                        *ngIf="isLoggedIn">Cart</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
 
