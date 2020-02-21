@@ -18,6 +18,7 @@ import {PaymentComponent} from './payment/payment.component';
 import {CookieService} from "ngx-cookie-service";
 import {LoadingIndicatorComponent} from './core/loading-indicator/loading-indicator.component';
 import {SharedModule} from "./shared/shared.module";
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 @NgModule({
     declarations: [
@@ -50,6 +51,7 @@ import {SharedModule} from "./shared/shared.module";
     ],
     providers: [
         CookieService,
+        {provide: LocationStrategy, useClass: HashLocationStrategy},
         // disable backdrop for dialog window
         {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},
         {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
