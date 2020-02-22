@@ -47,7 +47,6 @@ export class LoginComponent implements OnInit {
 
     public onSubmit() {
         this.loadingIndicatorService.startLoading();
-        console.log('hello');
         let user = {email: this.f.email.value, password: this.f.password.value};
         // stop here if form is invalid
         if (this.loginForm.invalid) {

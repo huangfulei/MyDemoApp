@@ -20,10 +20,11 @@ export class SignUpComponent implements OnInit {
     specialCharExp = '^(?=.*[!@#$%^&*()_+}{|":?></.,\';=-]).+$';
     signupForm: FormGroup;
     public error: string;
+    private returnUrl = '/login';
 
     constructor(private fb: FormBuilder,
                 private signUpService: SignUpService,
-                private route: Router,
+                private router: Router,
                 private snackBar: MatSnackBar) {
     }
 
@@ -61,13 +62,8 @@ export class SignUpComponent implements OnInit {
         this.userInfo.password = this.password.value;
         this.userInfo.email = this.email.value;
         this.signUpService.signUp(this.userInfo).subscribe((data: any) => {
-                console.log(data);
-            },
-            // todo: error handling
-            (response) => {
-                console.log(response);
-                this.error = response.error.message;
-            });
+            this.router.navigate([this.returnUrl]);
+        })
     }
 
     get username() {

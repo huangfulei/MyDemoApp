@@ -14,3 +14,8 @@
           'main'
           'footer';
 }
+
+.menu{
+    position:sticky;
+    top:0;
+}

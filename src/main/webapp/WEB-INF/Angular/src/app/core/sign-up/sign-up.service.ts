@@ -13,6 +13,6 @@ export class SignUpService extends CommonService {
     }
 
     public signUp(userInfo: any): Observable<any> {
-        return this.simplePost(userInfo, this.SIGN_UP_ENDPOINT, this.MODEL_NAME,);
+        return this.simplePost(this.SIGN_UP_ENDPOINT, userInfo, this.MODEL_NAME);
     }
 }
